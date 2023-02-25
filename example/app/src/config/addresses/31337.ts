@@ -3,5 +3,5 @@
 /* eslint-disable */
 
 export const ContractAddresses_31337 = {
-  Test: "0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3",
+  Test: "0xD2547e4AA4f5a2b0a512BFd45C9E3360FeEa48Df",
 };
