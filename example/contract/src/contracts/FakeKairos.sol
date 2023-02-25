@@ -8,9 +8,14 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 contract FakeKairos {
     IERC20 constant WETH = IERC20(address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2));
 
-    function borrow(IERC721 implem, uint tokenId, uint amount, bytes memory signature) external {
+    // function borrow(IERC721 implem, uint tokenId, uint amount, bytes memory signature) external {
+    //     implem.safeTransferFrom(msg.sender, address(this), tokenId);
+    //     address lender = ECDSA.recover(keccak256(abi.encode(amount)), signature);
+    //     WETH.transferFrom(lender, msg.sender, amount);
+    // }
+
+    function borrow(IERC721 implem, uint tokenId, uint amount) external {
         implem.safeTransferFrom(msg.sender, address(this), tokenId);
-        address lender = ECDSA.recover(keccak256(abi.encode(amount)), signature);
-        WETH.transferFrom(lender, msg.sender, amount);
+        WETH.transfer(msg.sender, amount);
     }
 }
