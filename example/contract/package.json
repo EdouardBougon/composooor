@@ -36,5 +36,8 @@
     "hardhat-address-exporter": "^0.0.4",
     "hardhat-watcher": "^2.5.0",
     "prettier-plugin-solidity": "^1.1.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.1"
   }
 }
