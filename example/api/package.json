@@ -1,0 +1,32 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kairos-loan/composooor.git"
+  },
+  "author": "Kairos Loan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kairos-loan/composooor/issues"
+  },
+  "homepage": "https://github.com/kairos-loan/composooor#readme",
+  "scripts": {
+    "build": "tsc --build --force",
+    "start:dev": "ts-node-dev ./src/server.ts",
+    "start:prod": "node ./dist/server.js",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
+  },
+  "dependencies": {
+    "axios": "^1.3.4",
+    "cors": "^2.8.5",
+    "ethers": "^6.0.8",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17"
+  }
+}

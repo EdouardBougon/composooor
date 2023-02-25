@@ -1,0 +1,27 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.rulers": [
+    120
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  },
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.workingDirectories": [
+    "example/api",
+    "example/app",
+    "example/contract",
+    "packages/composooor"
+  ],
+  "files.exclude": {},
+  "git.ignoreLimitWarning": true
+}
