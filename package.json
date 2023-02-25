@@ -8,7 +8,7 @@
     "packages/shared-ts"
   ],
   "scripts": {
-    "start:dev": "npm run -w contract node & concurrently \"npm run -w api start:dev\" \"npm run -w app start:dev\" \"npm run -w contract deploy:localhost:watch\""
+    "start:dev": "npm run -w contract node & sleep 10 && concurrently \"npm run -w api start:dev\" \"npm run -w app start:dev\" \"npm run -w contract deploy:localhost:watch\""
   },
   "devDependencies": {
     "@types/node": "^16.0.0",

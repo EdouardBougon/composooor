@@ -18,14 +18,23 @@ const config: HardhatUserConfig = {
         mnemonic: process.env.MNEMONIC,
       },
       chainId: 31337,
+      forking: {
+        blockNumber: 16706742,
+        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY ?? ''}`,
+      }
     },
     hardhat: {
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
+      chainId: 31337,
+      forking: {
+        blockNumber: 16706742,
+        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY ?? ''}`,
+      }
     },
     goerli: {
-      url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_GOERLY_API_KEY ?? ''}`,
+      url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY ?? ''}`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
