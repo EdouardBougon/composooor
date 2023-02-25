@@ -2,5 +2,5 @@
 pragma solidity 0.8.18;
 
 interface IFlashBorrower {
-    function flashCallback() external;
+    function flashCallback(bytes memory callbackData) external;
 }
