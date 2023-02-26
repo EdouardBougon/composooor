@@ -5,15 +5,15 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
+struct SaleOffer {
+    IERC721 implem;
+    uint tokenId;
+    uint price;
+}
+
 /// @notice NFT marketplace
 contract MarketPlace {
     IERC20 constant WETH = IERC20(address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2));
-
-    struct SaleOffer {
-        IERC721 implem;
-        uint tokenId;
-        uint price;
-    }
 
     /// @notice buy a NFT from an offer to sell, signed by seller
     function buy(SaleOffer memory offer, bytes memory signature) external {

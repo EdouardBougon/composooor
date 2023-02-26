@@ -7,7 +7,7 @@ pragma solidity 0.8.18;
 ///     as a contract, use it to consume those parameters
 /// @dev to create your adapter, inherit from this contract
 contract ComposooorRegister {
-    error MissingOffchainDataError(bytes32 url, bytes32 abiArgs);
+    error MissingOffchainDataError(string url, bytes abiArgs);
 
     // possible future improvement : support multiple data objects for the same tx
 
@@ -25,7 +25,7 @@ contract ComposooorRegister {
     /// @notice as a contract, consume a pre-computed parameter,
     ///     successive calls will give different parameters (computed for context)
     /// @dev correctness of the data MUST be checked
-    function consumeParameter(bytes32 url, bytes32 abiArgs) external returns (bytes memory data_){
+    function consumeParameter(string memory url, bytes memory abiArgs) internal returns (bytes memory data_){
         data_ = data[tx.origin][nonce[tx.origin] + 1];
         if (data_.length == 0){
             revert MissingOffchainDataError(url, abiArgs);
