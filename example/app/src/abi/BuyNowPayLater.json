@@ -2,11 +2,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract ComposooorRegister",
-        "name": "_register",
-        "type": "address"
-      },
-      {
         "internalType": "contract FakeKairos",
         "name": "_kairos",
         "type": "address"
