@@ -35,7 +35,9 @@
     "hardhat-abi-exporter": "^2.10.1",
     "hardhat-address-exporter": "^0.0.4",
     "hardhat-watcher": "^2.5.0",
-    "prettier-plugin-solidity": "^1.1.1"
+    "ds-test": "github:dapphub/ds-test",
+    "prettier-plugin-solidity": "^1.1.1",
+    "forge-std": "github:foundry-rs/forge-std#master"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1"
