@@ -87,7 +87,7 @@ const config: HardhatUserConfig = {
   abiExporter: {
     path: '../../app/src/abi',
     runOnCompile: true,
-    // only: [''],
+    only: ['BuyNowPayLater', 'ComposooorRegister', 'SmartContractWallet'],
     clear: true,
     flat: true,
     spacing: 2,

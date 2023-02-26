@@ -1,0 +1,31 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "abiArgs",
+        "type": "bytes"
+      }
+    ],
+    "name": "MissingOffchainDataError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "recordParameter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
