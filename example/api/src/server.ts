@@ -13,8 +13,7 @@ app.use(express.json());
 
 // Test function
 app.get('/api/test', (req: Request<unknown, { abi: string }, never, ComposooorQueryParams>, res: Response) => {
-  const [decode] = AbiCoder.defaultAbiCoder().decode(['uint'], req.query.args);
-
+  AbiCoder.defaultAbiCoder().decode(['uint'], req.query.args);
 
   const encode = AbiCoder.defaultAbiCoder().encode(['uint'], [10]);
 
