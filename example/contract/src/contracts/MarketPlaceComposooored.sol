@@ -7,7 +7,6 @@ import "./ComposooorRegister.sol";
 import "./MarketPlace.sol";
 
 contract MarketPlaceComposooored is ComposooorRegister {
-
     MarketPlace private constant marketplace = MarketPlace(address(bytes20(keccak256(abi.encode("marketplace")))));
 
     function marketPlaceBuy(IERC721 implem, uint tokenId) internal {
