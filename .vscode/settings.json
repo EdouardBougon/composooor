@@ -25,8 +25,8 @@
   "files.exclude": {},
   "git.ignoreLimitWarning": true,
   "solidity.remappings": [
-    "@openzeppelin/=./example/contracts/node_modules/@openzeppelin/",
-    "forge-std/=./example/contracts/node_modules/forge-std/src/",
-    "ds-test/=./example/contracts/node_modules/ds-test/src/"
+    "@openzeppelin/=./example/contract/node_modules/@openzeppelin/",
+    "forge-std/=./example/contract/node_modules/forge-std/src/",
+    "ds-test/=./example/contract/node_modules/ds-test/src/"
   ]
 }

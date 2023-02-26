@@ -20,7 +20,7 @@ contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
         MarketPlace _market,
         IERC721 _nft,
         IERC20 _wEth
-    ){
+    ) MarketPlaceComposooored(_market) {
         kairos = _kairos;
         flashLender = _flashLender;
         market = _market;
@@ -29,13 +29,15 @@ contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
     }
 
     function buyNowPayLater() external {
-        flashLender.flashBorrow(1 ether, abi.encode(nft, 1));
+        flashLender.flashBorrow(1 ether, abi.encode(msg.sender, nft, 1));
     }
 
     function flashCallback(bytes memory callbackData) external {
-        (IERC721 implem, uint tokenId) = abi.decode(callbackData, (IERC721, uint));
+        (address initialMsgSender, IERC721 implem, uint tokenId) = abi.decode(callbackData, (address, IERC721, uint));
+        wEth.approve(address(market), 1 ether);
         marketPlaceBuy(implem, tokenId);
+        nft.approve(address(kairos), 1);
         kairos.borrow(implem, tokenId, 7 ether / 10);
-        wEth.transferFrom(msg.sender, address(this), 3 ether / 10);
+        wEth.transferFrom(initialMsgSender, address(this), 3 ether / 10);
     }
 }

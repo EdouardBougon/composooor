@@ -13,7 +13,7 @@ contract FakeKairos {
     }
 
     function borrow(IERC721 implem, uint tokenId, uint amount) external {
-        implem.safeTransferFrom(msg.sender, address(this), tokenId);
+        implem.transferFrom(msg.sender, address(this), tokenId);
         wEth.transfer(msg.sender, amount);
     }
 }
