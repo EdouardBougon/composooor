@@ -3,12 +3,12 @@ pragma solidity 0.8.18;
 
 import "forge-std/Test.sol";
 
-import "../MockWeth.sol";
-import "../BuyNowPayLater.sol";
-import "../FlashLender.sol";
-import "../MarketPlace.sol";
-import "../MockNFT.sol";
-import "../SmartContractWallet.sol";
+import "../contracts/MockWeth.sol";
+import "../contracts/BuyNowPayLater.sol";
+import "../contracts/FlashLender.sol";
+import "../contracts/MarketPlace.sol";
+import "../contracts/MockNFT.sol";
+import "../contracts/SmartContractWallet.sol";
 
 contract TestFull is Test {
     MockWeth wEth;
@@ -39,7 +39,7 @@ contract TestFull is Test {
             functionSelector: buyNowPayLater.buyNowPayLater.selector,
             data: emptyBytes
         });
-        Call[] memory calls = new Call[](1); 
+        Call[] memory calls = new Call[](1);
         calls[0] = bnplCall;
         wallet.execute(calls);
     }

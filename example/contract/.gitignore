@@ -2,9 +2,8 @@ node_modules
 .env
 coverage
 coverage.json
-src/types
+cache_forge
 
 #Hardhat files
-cache
-artifacts
+out
 

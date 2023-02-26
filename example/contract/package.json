@@ -14,30 +14,32 @@
   "homepage": "https://github.com/kairos-loan/composooor#readme",
   "private": true,
   "scripts": {
-    "node": "hardhat node --hostname 0.0.0.0",
+    "node:hardhat": "hardhat node --hostname 0.0.0.0",
+    "node:anvil": "anvil --silent --block-time 1 > ./out/anvil-logs.txt",
     "build": "hardhat compile",
     "build:watch": "hardhat watch compile",
     "run": "hardhat run --",
-    "deploy:localhost": "hardhat run src/scripts/deployLocalhost.ts --network localhost",
+    "deploy:localhost": "hardhat run ./scripts/deployLocalhost.ts --network localhost",
     "deploy:localhost:watch": "hardhat watch deployLocalhost --network localhost",
     "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint --fix .",
     "lint:sol": "hardhat check",
     "lint:all": "npm run lint && npm run lint:sol",
-    "test": "hardhat test",
-    "test:watch": "hardhat watch test"
+    "test": "forge test",
+    "test:watch": "forge test --watch"
   },
   "devDependencies": {
     "@ethersproject/contracts": "^5.7.0",
+    "@nomicfoundation/hardhat-foundry": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "@nomiclabs/hardhat-solhint": "^3.0.0",
+    "ds-test": "github:dapphub/ds-test",
+    "forge-std": "github:foundry-rs/forge-std#master",
     "hardhat": "^2.12.6",
     "hardhat-abi-exporter": "^2.10.1",
     "hardhat-address-exporter": "^0.0.4",
     "hardhat-watcher": "^2.5.0",
-    "ds-test": "github:dapphub/ds-test",
-    "prettier-plugin-solidity": "^1.1.1",
-    "forge-std": "github:foundry-rs/forge-std#master"
+    "prettier-plugin-solidity": "^1.1.1"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1"
