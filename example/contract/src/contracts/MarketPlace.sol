@@ -13,12 +13,16 @@ struct SaleOffer {
 
 /// @notice NFT marketplace
 contract MarketPlace {
-    IERC20 constant WETH = IERC20(address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2));
+    IERC20 private immutable wEth;
+
+    constructor(IERC20 _wEth) {
+        wEth = _wEth;
+    }
 
     /// @notice buy a NFT from an offer to sell, signed by seller
     function buy(SaleOffer memory offer, bytes memory signature) external {
         address seller = ECDSA.recover(keccak256(abi.encode(offer)), signature);
-        WETH.transferFrom(msg.sender, seller, offer.price);
+        wEth.transferFrom(msg.sender, seller, offer.price);
         offer.implem.transferFrom(seller, msg.sender, offer.tokenId);
     }
 }
