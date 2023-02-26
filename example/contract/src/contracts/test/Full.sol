@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
+import "forge-std/Test.sol";
+
 import "../MockWeth.sol";
 import "../BuyNowPayLater.sol";
 import "../FlashLender.sol";
@@ -8,7 +10,7 @@ import "../MarketPlace.sol";
 import "../MockNFT.sol";
 import "../SmartContractWallet.sol";
 
-contract TestFull {
+contract TestFull is Test {
     MockWeth wEth;
     BuyNowPayLater buyNowPayLater;
     FakeKairos kairos;
