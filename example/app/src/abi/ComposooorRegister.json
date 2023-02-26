@@ -2,6 +2,11 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "registryAddress",
+        "type": "address"
+      },
+      {
         "internalType": "string",
         "name": "url",
         "type": "string"
