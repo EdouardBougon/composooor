@@ -1,2 +1,5 @@
-
-error MissingOffchainDataError(bytes32 url, bytes32 abiArgs);
+error MissingOffchainDataError(
+    address registryAddress,
+    string url,
+    bytes abiArgs
+);

@@ -8,7 +8,6 @@ import "./IFlashBorrower.sol";
 import "./MarketPlaceComposooored.sol";
 
 contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
-    ComposooorRegister private register;
     FakeKairos private kairos;
     FlashLender private flashLender;
     MarketPlace private market;
@@ -16,14 +15,12 @@ contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
     IERC20 private wEth; 
 
     constructor(
-        ComposooorRegister _register,
         FakeKairos _kairos,
         FlashLender _flashLender,
         MarketPlace _market,
         IERC721 _nft,
         IERC20 _wEth
     ){
-        register = _register;
         kairos = _kairos;
         flashLender = _flashLender;
         market = _market;
