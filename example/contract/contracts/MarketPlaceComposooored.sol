@@ -7,7 +7,11 @@ import "./ComposooorRegister.sol";
 import "./MarketPlace.sol";
 
 contract MarketPlaceComposooored is ComposooorRegister {
-    MarketPlace private constant marketplace = MarketPlace(address(bytes20(keccak256(abi.encode("marketplace")))));
+    MarketPlace private immutable marketplace;
+
+    constructor(MarketPlace _marketplace){
+        marketplace = _marketplace;
+    }
 
     function marketPlaceBuy(IERC721 implem, uint tokenId) internal {
         bytes memory data = consumeParameter("http://marketplace.api.composooor.com", abi.encode(implem, tokenId));

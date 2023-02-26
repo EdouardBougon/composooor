@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
+struct Call {
+    address callee;
+    bytes4 functionSelector;
+    bytes data;
+}
+
 /// @notice smart contract wallet enabling batch of actions in one transaction
 contract SmartContractWallet {
     address private immutable owner;
 
     constructor() {
         owner = msg.sender;
-    }
-
-    struct Call {
-        address callee;
-        bytes4 functionSelector;
-        bytes data;
     }
     
     function execute(Call[] memory calls) external {

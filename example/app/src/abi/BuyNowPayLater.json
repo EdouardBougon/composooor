@@ -20,6 +20,11 @@
         "internalType": "contract IERC721",
         "name": "_nft",
         "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_wEth",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
