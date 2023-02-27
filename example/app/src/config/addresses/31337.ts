@@ -3,5 +3,6 @@
 /* eslint-disable */
 
 export const ContractAddresses_31337 = {
-  Test: "0xD2547e4AA4f5a2b0a512BFd45C9E3360FeEa48Df",
+  BuyNowPayLater: "0x9e7F7d0E8b8F38e3CF2b3F7dd362ba2e9E82baa4",
+  SmartContractWallet: "0x7036124464A2d2447516309169322c8498ac51e3",
 };

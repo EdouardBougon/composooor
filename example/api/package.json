@@ -14,7 +14,7 @@
   "homepage": "https://github.com/kairos-loan/composooor#readme",
   "scripts": {
     "build": "tsc --build --force",
-    "start:dev": "ts-node-dev ./src/server.ts",
+    "start:dev": "ts-node-dev ./src/server.ts --build --force",
     "start:prod": "node ./dist/server.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
@@ -22,7 +22,7 @@
   "dependencies": {
     "axios": "^1.3.4",
     "cors": "^2.8.5",
-    "ethers": "^6.0.8",
+    "ethers": "^5.7.2",
     "express": "^4.18.2"
   },
   "devDependencies": {
