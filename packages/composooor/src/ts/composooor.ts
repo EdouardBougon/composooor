@@ -1,6 +1,10 @@
 import { providers, Contract } from 'ethers';
 import axios from 'axios';
-import { BuyNowPayLater__factory, SmartContractWallet__factory } from '@composooor/contract';
+import {
+  BuyNowPayLater__factory,
+  SmartContractWallet__factory,
+  ComposooorRegister__factory,
+} from '@composooor/contract';
 
 const provider = new providers.JsonRpcProvider('http://localhost:8545');
 
@@ -33,9 +37,14 @@ export async function composooor(scWalletAddr: string, callee: string, functionS
 
     console.log(apiUrl, params, registryAddress);
 
-    await axios
-      .post(apiUrl, JSON.stringify(params))
-      .then(async (abiEncodedParams: any) => storeInRegistry(registryAddress, abiEncodedParams));
+    const abiEncodedParams: string = await axios.get(apiUrl, { params: { params } });
+
+    // Add the call to the registry at the beginning of the calls array
+    calls.unshift({
+      callee: registryAddress,
+      functionSelector: ComposooorRegister__factory.createInterface().getSighash('recordParameter(bytes)'),
+      data: abiEncodedParams,
+    });
 
     return e;
   }
