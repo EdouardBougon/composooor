@@ -1,18 +1,24 @@
-import type { UseContractWriteConfig, UsePrepareContractWriteConfig } from 'wagmi';
-import type { MissingOffchainDataError } from './errors';
-import type { ComposooorQueryParams, ComposooorApiResponse } from './api/api.interface';
-import type { PrefixedBy0x } from './common';
-import type { BigNumber } from 'ethers';
+import type {
+  UseContractWriteConfig,
+  UsePrepareContractWriteConfig,
+} from "wagmi";
+import type { MissingOffchainDataError } from "./errors";
+import type {
+  ComposooorQueryParams,
+  ComposooorApiResponse,
+} from "./api/api.interface";
+import type { PrefixedBy0x } from "./common";
+import type { BigNumber } from "ethers";
 
-import { useEffect, useState } from 'react';
-import { useProvider, useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { Contract, utils } from 'ethers';
+import { useEffect, useState } from "react";
+import { useProvider, useContractWrite, usePrepareContractWrite } from "wagmi";
+import { Contract, utils } from "ethers";
 
-import { ComposooorRegister__factory } from '../../../../example/contract/out/types/factories/contracts/ComposooorRegister__factory';
+import { ComposooorRegister__factory } from "../../../../example/contract/out/types/factories/contracts/ComposooorRegister__factory";
 
-import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
-import { useAsync } from './utils/useAsync';
-import { useAxiosGet } from './utils/useAxios';
+import { abi as scWalletAbi } from "./abi/SmartContractWallet__factory";
+import { useAsync } from "./utils/useAsync";
+import { useAxiosGet } from "./utils/useAxios";
 
 /**
  * Call
@@ -27,7 +33,10 @@ interface Call {
  * UseComposooorConfig
  */
 export type UseComposooorConfig = Required<
-  Pick<UsePrepareContractWriteConfig, 'abi' | 'address' | 'args' | 'functionName'>
+  Pick<
+    UsePrepareContractWriteConfig,
+    "abi" | "address" | "args" | "functionName"
+  >
 > &
   UsePrepareContractWriteConfig & { scWalletAddr: string };
 
@@ -43,25 +52,35 @@ interface RevertMessage {
 /**
  * useComposooor
  */
-export function useComposooor(config: UseComposooorConfig): ReturnType<typeof useContractWrite> {
+export function useComposooor(
+  config: UseComposooorConfig
+): ReturnType<typeof useContractWrite> {
   const [calls, setCalls] = useState<Call[]>([]);
   const [data, setData] = useState<PrefixedBy0x>();
-  const [missingOffchainDataError, setMissingOffchainDataError] = useState<MissingOffchainDataError>();
+  const [missingOffchainDataError, setMissingOffchainDataError] =
+    useState<MissingOffchainDataError>();
 
   const provider = useProvider({ chainId: config.chainId });
-  const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider);
+  const scWalletContract = new Contract(
+    config.scWalletAddr,
+    scWalletAbi,
+    provider
+  );
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
 
   setCalls([
     {
       callee: config.address,
       functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
-      data: iface.encodeFunctionData(config.functionName, config.args) as PrefixedBy0x,
+      data: iface.encodeFunctionData(
+        config.functionName,
+        config.args
+      ) as PrefixedBy0x,
     },
   ]);
 
-  const { error: simulationError } = useAsync<BigNumber, RevertMessage>(async () =>
-    scWalletContract.estimateGas.execute(calls),
+  const { error: simulationError } = useAsync<BigNumber, RevertMessage>(
+    async () => scWalletContract.estimateGas.execute(calls)
   );
 
   useEffect(() => {
@@ -69,11 +88,16 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
       return;
     }
 
-    const error: MissingOffchainDataError = decodeRevertMessage(simulationError.reason);
+    const error: MissingOffchainDataError = decodeRevertMessage(
+      simulationError.reason
+    );
 
     setMissingOffchainDataError(error);
 
-    const { data: responseDate } = useAxiosGet<ComposooorQueryParams, ComposooorApiResponse>(error.url, {
+    const { data: responseDate } = useAxiosGet<
+      ComposooorQueryParams,
+      ComposooorApiResponse
+    >(error.url, {
       params: {
         args: error.abiArgs,
       },
@@ -89,10 +113,11 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
 
     const callToRegisterData: Call = {
       callee: missingOffchainDataError.registryAddress,
-      functionSelector: ComposooorRegister__factory.createInterface().getSighash(
-        'recordParameter(bytes)',
-      ) as PrefixedBy0x,
-      data: utils.defaultAbiCoder.encode(['bytes'], [data]) as PrefixedBy0x,
+      functionSelector:
+        ComposooorRegister__factory.createInterface().getSighash(
+          "recordParameter(bytes)"
+        ) as PrefixedBy0x,
+      data: utils.defaultAbiCoder.encode(["bytes"], [data]) as PrefixedBy0x,
     };
 
     setCalls((previousCalls: Call[]) => [callToRegisterData, ...previousCalls]);
@@ -101,7 +126,7 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
   const { config: prepareConfig } = usePrepareContractWrite({
     abi: scWalletAbi,
     address: config.scWalletAddr as PrefixedBy0x,
-    functionName: 'execute',
+    functionName: "execute",
     args: [calls],
   });
 
@@ -117,7 +142,7 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
 function decodeRevertMessage(message: string): MissingOffchainDataError {
   const [url, abiArgs, registryAddress]: string[] = message
     .split('MissingOffchainDataError("')[1]
-    .split(')')[0]
+    .split(")")[0]
     .split('", "');
 
   return { url, abiArgs, registryAddress } as MissingOffchainDataError;
