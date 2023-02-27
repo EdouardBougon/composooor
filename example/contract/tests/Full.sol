@@ -55,8 +55,10 @@ contract TestFull is Test {
             callee: address(buyNowPayLater),
             functionSelector: buyNowPayLater.recordParameter.selector,
             data: abi.encode(
-                saleOffer,
-                genSignature(saleOffer)
+                abi.encode(
+                    saleOffer,
+                    genSignature(saleOffer)
+                )
             )
         });
         Call memory approvalCall =  Call({
@@ -64,7 +66,7 @@ contract TestFull is Test {
             functionSelector: wEth.approve.selector,
             data: abi.encode(
                 address(buyNowPayLater),
-                1 ether
+                uint256(1 ether)
             )
         });
         Call[] memory calls = new Call[](3);

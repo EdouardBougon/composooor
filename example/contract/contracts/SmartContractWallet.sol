@@ -4,7 +4,7 @@ pragma solidity 0.8.18;
 struct Call {
     address callee;
     bytes4 functionSelector;
-    bytes data;
+    bytes data; // must be abi encoded !
 }
 
 /// @notice smart contract wallet enabling batch of actions in one transaction
@@ -20,7 +20,7 @@ contract SmartContractWallet {
         require(msg.sender == owner);
 
         for(uint8 i; i < calls.length; i++) {
-            (success, ) = calls[i].callee.call(abi.encodeWithSelector(calls[i].functionSelector, calls[i].data));
+            (success, ) = calls[i].callee.call(bytes.concat(calls[i].functionSelector, calls[i].data));
             require(success);
         }
     }

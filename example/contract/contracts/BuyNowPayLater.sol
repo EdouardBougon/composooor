@@ -39,5 +39,6 @@ contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
         nft.approve(address(kairos), 1);
         kairos.borrow(implem, tokenId, 7 ether / 10);
         wEth.transferFrom(initialMsgSender, address(this), 3 ether / 10);
+        wEth.approve(address(flashLender), 1 ether);
     }
 }
