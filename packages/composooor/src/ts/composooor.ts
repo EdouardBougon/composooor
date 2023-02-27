@@ -1,8 +1,6 @@
 import { providers, Contract } from 'ethers';
 import axios from 'axios';
-import { BuyNowPayLater__factory } from '@composooor/contract';
-
-import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
+import { BuyNowPayLater__factory, SmartContractWallet__factory } from '@composooor/contract';
 
 const provider = new providers.JsonRpcProvider('http://localhost:8545');
 
@@ -12,9 +10,11 @@ interface Call {
   data: string;
 }
 
+const smartContractWalletAbi = SmartContractWallet__factory.abi;
+
 export async function composooor(scWalletAddr: string, callee: string, functionSelector: string, args: string) {
   const signer = provider.getSigner();
-  const scWalletContract = new Contract(scWalletAddr, scWalletAbi, signer);
+  const scWalletContract = new Contract(scWalletAddr, smartContractWalletAbi, signer);
 
   const calls: Call[] = [
     {
@@ -48,4 +48,9 @@ const decodeRevertMessage = (message: any): { apiUrl: string; params: string; re
   return { apiUrl, params, registryAddress };
 };
 
-const storeInRegistry = async (registryAddress: string, params: string) => {};
+const storeInRegistry = async (registryAddress: string, params: string) => {
+  const signer = provider.getSigner();
+  const registryContract = BuyNowPayLater__factory.connect(registryAddress, signer);
+
+  await registryContract.recordParameter(params);
+};
