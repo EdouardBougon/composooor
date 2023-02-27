@@ -17,6 +17,7 @@
     "build": "tsc --build --force"
   },
   "dependencies": {
-    "@composooor/contract": "^1.0.0"
+    "@composooor/contract": "^1.0.0",
+    "wagmi": "^0.11.7"
   }
 }

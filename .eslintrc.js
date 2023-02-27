@@ -125,5 +125,6 @@ module.exports = {
     "@typescript-eslint/no-type-alias": "off",
     "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/no-misused-promise": "off",
+    "@typescript-eslint/non-nullable-type-assertion-style": "off",
   },
 };

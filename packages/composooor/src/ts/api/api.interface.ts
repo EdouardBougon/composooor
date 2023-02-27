@@ -1,13 +1,15 @@
+import type { PrefixedBy0x } from '../common';
+
 /**
  * Composooor Query Params
  */
 export interface ComposooorQueryParams {
-  args: `Ox${string}`;
+  args: PrefixedBy0x;
 }
 
 /**
  * Composooor Api Response
  */
 export interface ComposooorApiResponse {
-  data: `Ox${string}`;
+  data: PrefixedBy0x;
 }
