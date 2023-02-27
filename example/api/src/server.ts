@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import type { Request, Response } from 'express';
-import type { ComposooorQueryParams } from 'composooor';
+import type { ComposooorApiResponse, ComposooorQueryParams } from 'composooor';
+import type { SignedOffer } from './maketplace.service';
 
 import * as cors from 'cors';
 import * as express from 'express';
-import { AbiCoder } from 'ethers';
+import { ethers } from 'ethers';
+
+import { getBuyArgs, getMockSignedOffer } from './maketplace.service';
 
 const app: express.Express = express();
 const port: number = 8080;
@@ -12,13 +16,22 @@ app.use(cors());
 app.use(express.json());
 
 // Test function
-app.get('/api/test', (req: Request<unknown, { abi: string }, never, ComposooorQueryParams>, res: Response) => {
-  AbiCoder.defaultAbiCoder().decode(['uint'], req.query.args);
+app.get(
+  '/api/buy',
+  async (req: Request<unknown, ComposooorApiResponse, never, ComposooorQueryParams>, res: Response) => {
+    // Decode params
+    const [implem, tokenId] = ethers.utils.defaultAbiCoder.decode(['address', 'uint256'], req.query.args);
 
-  const encode = AbiCoder.defaultAbiCoder().encode(['uint'], [10]);
+    // Get a mocked offer
+    const signedOffer: SignedOffer = await getMockSignedOffer(implem, tokenId);
 
-  res.writeHead(200, {}).end(JSON.stringify({ abi: encode }));
-});
+    // Get args of the MarketPlace "buy" function
+    const buyArgsAbiEncoded = getBuyArgs(signedOffer);
+
+    // Return args
+    res.writeHead(200, {}).end(JSON.stringify({ data: buyArgsAbiEncoded } as ComposooorApiResponse));
+  },
+);
 
 // Start server
 app.listen(port, () => {
