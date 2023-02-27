@@ -23,5 +23,10 @@
     "packages/composooor"
   ],
   "files.exclude": {},
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "solidity.remappings": [
+    "@openzeppelin/=./example/contract/node_modules/@openzeppelin/",
+    "forge-std/=./example/contract/node_modules/forge-std/src/",
+    "ds-test/=./example/contract/node_modules/ds-test/src/"
+  ]
 }

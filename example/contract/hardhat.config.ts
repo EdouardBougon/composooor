@@ -5,6 +5,7 @@ import '@nomiclabs/hardhat-solhint';
 import 'hardhat-abi-exporter';
 import '@nomicfoundation/hardhat-toolbox';
 import 'hardhat-address-exporter';
+import "@nomicfoundation/hardhat-foundry";
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -41,19 +42,17 @@ const config: HardhatUserConfig = {
     },
   },
   paths: {
-    root: './src',
-    sources: './contracts',
-    tests: './tests',
-    artifacts: '../artifacts',
-    cache: '../cache',
+    root: './',
+    artifacts: './out/artifacts',
+    cache: './out/cache',
   },
   typechain: {
-    outDir: './types',
+    outDir: './out/types',
   },
   watcher: {
     compile: {
       tasks: ['compile'],
-      files: ['./src/contracts'],
+      files: ['./contracts'],
       verbose: true,
       clearOnStart: true,
       runOnLaunch: true,
@@ -61,7 +60,7 @@ const config: HardhatUserConfig = {
     },
     test: {
       tasks: [{ command: 'test' }],
-      files: ['./src/tests/**/*', './src/contracts'],
+      files: ['./tests/**/*', './contracts'],
       verbose: true,
       clearOnStart: true,
       runOnLaunch: true,
@@ -73,11 +72,11 @@ const config: HardhatUserConfig = {
         {
           command: 'run',
           params: {
-            script: 'src/scripts/deployLocalhost.ts',
+            script: 'scripts/deployLocalhost.ts',
           },
         },
       ],
-      files: ['./src/contracts', './src/scripts/deployLocalhost.ts'],
+      files: ['./contracts', './scripts/deployLocalhost.ts'],
       verbose: true,
       clearOnStart: false,
       runOnLaunch: true,
@@ -85,7 +84,7 @@ const config: HardhatUserConfig = {
     },
   },
   abiExporter: {
-    path: '../../app/src/abi',
+    path: '../app/src/abi',
     runOnCompile: true,
     only: ['BuyNowPayLater', 'ComposooorRegister', 'SmartContractWallet'],
     clear: true,
@@ -93,7 +92,7 @@ const config: HardhatUserConfig = {
     spacing: 2,
   },
   addressExporter: {
-    outDir: '../../app/src/config/addresses',
+    outDir: '../app/src/config/addresses',
     runPrettier: true,
   },
 };
