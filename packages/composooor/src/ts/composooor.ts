@@ -46,7 +46,10 @@ export async function composooor(scWalletAddr: string, callee: string, functionS
       data: utils.defaultAbiCoder.encode(['bytes'], [abiEncodedParams]),
     });
 
-    return e;
+    // Should add a loop & error handling
+    const res = await scWalletContract.execute(calls);
+
+    return res;
   }
 }
 
@@ -55,11 +58,4 @@ const decodeRevertMessage = (message: any): { apiUrl: string; params: string; re
   const [apiUrl, params, registryAddress] = message.split('MissingOffchainDataError("')[1].split(')')[0].split('", "');
 
   return { apiUrl, params, registryAddress };
-};
-
-const storeInRegistry = async (registryAddress: string, params: string) => {
-  const signer = provider.getSigner();
-  const registryContract = BuyNowPayLater__factory.connect(registryAddress, signer);
-
-  await registryContract.recordParameter(params);
 };
