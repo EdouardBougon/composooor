@@ -1,10 +1,8 @@
 import { providers, Contract } from 'ethers';
-
+import axios from 'axios';
 import { BuyNowPayLater__factory } from '@composooor/contract';
-import { ContractAddresses_31337 } from './addresses';
-import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
 
-// import post from 'axios';
+import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
 
 const provider = new providers.JsonRpcProvider('http://localhost:8545');
 
@@ -35,7 +33,10 @@ export async function composooor(scWalletAddr: string, callee: string, functionS
 
     console.log(apiUrl, params, registryAddress);
 
-    //   await post(apiUrl, params).then(async (abiEncodedParams: any) => storeInRegistry(registryAddress, abiEncodedParams));
+    await axios
+      .post(apiUrl, JSON.stringify(params))
+      .then(async (abiEncodedParams: any) => storeInRegistry(registryAddress, abiEncodedParams));
+
     return e;
   }
 }
@@ -47,5 +48,4 @@ const decodeRevertMessage = (message: any): { apiUrl: string; params: string; re
   return { apiUrl, params, registryAddress };
 };
 
-/* const storeInRegistry = async (registryAddress: string, params: string) => {};
- */
+const storeInRegistry = async (registryAddress: string, params: string) => {};
