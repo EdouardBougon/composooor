@@ -14,7 +14,7 @@ contract MarketPlaceComposooored is ComposooorRegister {
     }
 
     function marketPlaceBuy(IERC721 implem, uint tokenId) internal {
-        bytes memory data = consumeParameter("http://marketplace.api.composooor.com", abi.encode(implem, tokenId));
+        bytes memory data = consumeParameter("http://localhost:8080/api/buy", abi.encode(implem, tokenId));
         (SaleOffer memory saleOffer, bytes memory signature) = abi.decode(data, (SaleOffer, bytes));
         marketplace.buy(saleOffer, signature);
     }

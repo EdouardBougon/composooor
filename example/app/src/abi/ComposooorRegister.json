@@ -2,27 +2,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "registryAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "url",
-        "type": "string"
-      },
-      {
-        "internalType": "bytes",
-        "name": "abiArgs",
-        "type": "bytes"
-      }
-    ],
-    "name": "MissingOffchainDataError",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bytes",
         "name": "_data",
         "type": "bytes"
