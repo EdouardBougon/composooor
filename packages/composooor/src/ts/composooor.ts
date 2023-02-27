@@ -1,4 +1,4 @@
-import { providers, Contract } from 'ethers';
+import { providers, Contract, utils } from 'ethers';
 import axios from 'axios';
 import {
   BuyNowPayLater__factory,
@@ -43,7 +43,7 @@ export async function composooor(scWalletAddr: string, callee: string, functionS
     calls.unshift({
       callee: registryAddress,
       functionSelector: ComposooorRegister__factory.createInterface().getSighash('recordParameter(bytes)'),
-      data: abiEncodedParams,
+      data: utils.defaultAbiCoder.encode(['bytes'], [abiEncodedParams]),
     });
 
     return e;
