@@ -1,5 +1,6 @@
 import { providers, Contract } from 'ethers';
 
+import { BuyNowPayLater__factory } from '@composooor/contract';
 import { ContractAddresses_31337 } from './addresses';
 import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
 

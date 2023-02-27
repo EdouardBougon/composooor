@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kairos-loan/composooor.git"
@@ -16,5 +15,8 @@
   "homepage": "https://github.com/kairos-loan/composooor#readme",
   "scripts": {
     "build": "tsc --build --force"
+  },
+  "dependencies": {
+    "@composooor/contract": "^1.0.0"
   }
 }
