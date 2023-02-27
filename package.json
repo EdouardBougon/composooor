@@ -4,8 +4,7 @@
     "example/api",
     "example/app",
     "example/contract",
-    "packages/composooor",
-    "packages/shared-ts"
+    "packages/composooor"
   ],
   "scripts": {
     "start:dev": "npm run -w contract node:hardhat & sleep 10 && concurrently \"npm run -w api start:dev\" \"npm run -w app start:dev\" \"npm run -w contract deploy:localhost:watch\""

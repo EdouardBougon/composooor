@@ -124,5 +124,6 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "warn",
     "@typescript-eslint/no-type-alias": "off",
     "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/no-misused-promise": "off",
   },
 };
