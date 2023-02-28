@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 import { ContractAddresses } from '../config/addresses/addresses';
 
 const ButtonPay = () => {
-  console.log('ButtonPay');
+  console.log('ButtonPay', import.meta.env.VITE_WALLET, import.meta.env.VITE_BUYNOWPAYLATER);
 
   useComposooor({
-    scWalletAddr: ContractAddresses[31337].SmartContractWallet as `0x${string}`,
-    address: ContractAddresses[31337].BuyNowPayLater as `0x${string}`,
+    scWalletAddr: import.meta.env.VITE_WALLET ?? '0x3aAde2dCD2Df6a8cAc689EE797591b2913658659' as `0x${string}`,
+    address: import.meta.env.VITE_BUYNOWPAYLATER ?? '0xab16A69A5a8c12C732e0DEFF4BE56A70bb64c926' as `0x${string}`,
     abi: [{
       "inputs": [],
       "name": "buyNowPayLater",

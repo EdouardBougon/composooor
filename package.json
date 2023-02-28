@@ -9,7 +9,7 @@
     "app": "yarn workspace @composooor/app",
     "contract": "yarn workspace @composooor/contract",
     "composooor": "yarn workspace @composooor/composooor",
-    "start:dev": "yarn run contract node:anvil & concurrently \"yarn run api start:dev\" \"yarn run app start:dev\" \"yarn run contract deploy:localhost:forge\""
+    "start:dev": "yarn run contract node:anvil & yarn run contract deploy:localhost:forge && cross-env $(grep -v '^#' example/contract/deployment/.env | xargs) && concurrently \"yarn run api start:dev\" \"yarn run app start:dev\""
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0"
   },

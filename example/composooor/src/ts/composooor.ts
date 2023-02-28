@@ -1,11 +1,11 @@
-import type { UseContractWriteConfig, UsePrepareContractWriteConfig } from 'wagmi';
+import type { UsePrepareContractWriteConfig } from 'wagmi';
 import type { MissingOffchainDataError } from './errors';
 import type { ComposooorQueryParams, ComposooorApiResponse } from './api/api.interface';
 import type { PrefixedBy0x } from './common';
 import type { BigNumber } from 'ethers';
 
 import { useEffect, useState } from 'react';
-import { useProvider, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useProvider, useContractWrite } from 'wagmi';
 import { Contract, utils } from 'ethers';
 
 import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
@@ -29,6 +29,8 @@ export type UseComposooorConfig = Required<
 > &
   UsePrepareContractWriteConfig & { scWalletAddr: PrefixedBy0x };
 
+export type UseComposooorResult = ReturnType<typeof useContractWrite>;
+
 /**
  *
  * @param config
@@ -41,29 +43,26 @@ interface RevertMessage {
 /**
  * useComposooor
  */
-export function useComposooor(config: UseComposooorConfig): ReturnType<typeof useContractWrite> {
+export function useComposooor(config: UseComposooorConfig): UseComposooorResult {
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
-  const [calls, setCalls] = useState<Call[]>([]);
   const [data, setData] = useState<PrefixedBy0x>();
+  // const [contractWriteResult, setContractWriteResult] = useState<UseComposooorResult>();
   const [missingOffchainDataError, setMissingOffchainDataError] = useState<MissingOffchainDataError>();
 
   const provider = useProvider({ chainId: config.chainId });
 
   console.log('useComposooor');
 
-  useEffect(
-    () =>
-      setCalls([
-        {
-          callee: config.address,
-          functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
-          data: iface.encodeFunctionData(config.functionName, config.args) as PrefixedBy0x,
-        },
-      ]),
-    [],
-  );
+  const [calls, setCalls] = useState<Call[]>([
+    {
+      callee: config.address,
+      functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
+      data: `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
+    },
+  ]);
 
   const { error: simulationError } = useAsync<BigNumber, RevertMessage>(async () => {
+    console.log('estimateGas', calls);
     const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider);
 
     return scWalletContract.estimateGas.execute(calls);
@@ -74,9 +73,7 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
       return;
     }
 
-    console.log(simulationError);
-
-    const error: MissingOffchainDataError = decodeRevertMessage(simulationError.reason);
+    const error: MissingOffchainDataError = decodeRevertMessage(simulationError);
 
     setMissingOffchainDataError(error);
 
@@ -103,14 +100,13 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
     setCalls((previousCalls: Call[]) => [callToRegisterData, ...previousCalls]);
   }, [data, missingOffchainDataError]);
 
-  const { config: prepareConfig } = usePrepareContractWrite({
+  return useContractWrite({
+    mode: 'recklesslyUnprepared',
     abi: scWalletAbi,
     address: config.scWalletAddr,
     functionName: 'execute',
     args: [calls],
   });
-
-  return useContractWrite(prepareConfig as UseContractWriteConfig);
 }
 
 /**
@@ -119,12 +115,13 @@ export function useComposooor(config: UseComposooorConfig): ReturnType<typeof us
  * Example:
  * `Error: VM Exception while processing transaction: reverted with custom error 'MissingOffchainDataError("0x42Cc87749B4031c53181692c537622e5c3b7d061", "https://composooor.com/api", "0x1234")'`
  */
-function decodeRevertMessage(message: string): MissingOffchainDataError {
-  if (message.match('MissingOffchainDataError') === null) {
-    throw new Error(`Unkown error: ${message}`);
+function decodeRevertMessage(error: RevertMessage): MissingOffchainDataError {
+  if (error.reason.match('MissingOffchainDataError') === null) {
+    console.log(error);
+    throw new Error(`Unkown error: ${error.reason}`);
   }
 
-  const [url, abiArgs, registryAddress]: string[] = message
+  const [url, abiArgs, registryAddress]: string[] = error.reason
     .split('MissingOffchainDataError("')[1]
     .split('")')[0]
     .split('", "');

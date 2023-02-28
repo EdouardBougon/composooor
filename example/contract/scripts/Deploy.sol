@@ -27,7 +27,7 @@ contract Deploy is Script {
 
         vm.startBroadcast(testPKey);
         address f39 = vm.addr(testPKey);
-        vm.label(f39 , "F39");
+        vm.label(f39, "F39");
         wEth = new MockWeth();
         kairos = new FakeKairos(wEth);
         flashLender = new FlashLender(wEth);
@@ -50,8 +50,7 @@ contract Deploy is Script {
         toWrite = addEnv(toWrite, "VITE_NFT", vm.toString(address(nft)));
         toWrite = addEnv(toWrite, "VITE_WALLET", vm.toString(address(wallet)));
 
-
-        vm.writeFile("./deployment.env", toWrite);
+        vm.writeFile("./deployment/.env", toWrite);
     }
 
     function addEnv(
