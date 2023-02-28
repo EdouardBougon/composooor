@@ -17,11 +17,16 @@ contract SmartContractWallet {
     
     function execute(Call[] memory calls) external {
         bool success;
+        bytes memory result;
         require(msg.sender == owner);
 
         for(uint8 i; i < calls.length; i++) {
-            (success, ) = calls[i].callee.call(bytes.concat(calls[i].functionSelector, calls[i].data));
-            require(success);
+            (success, result) = calls[i].callee.call(bytes.concat(calls[i].functionSelector, calls[i].data));
+            if (!success) {
+                assembly {
+                    revert(add(result,32),mload(result))
+                }
+            }
         }
     }
 }
