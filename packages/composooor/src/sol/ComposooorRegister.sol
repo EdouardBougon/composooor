@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-import "./MissingOffchainDataError.sol";
+error MissingOffchainDataError(
+    address registryAddress,
+    string url,
+    bytes abiArgs
+);
 
 /// @title Composooor Parameter Register
 /// @author Kairos Loan (@kairos-loan)

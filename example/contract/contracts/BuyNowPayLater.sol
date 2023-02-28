@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-import "./ComposooorRegister.sol";
 import "./FakeKairos.sol";
 import "./FlashLender.sol";
 import "./IFlashBorrower.sol";
@@ -12,7 +11,7 @@ contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
     FlashLender private flashLender;
     MarketPlace private market;
     IERC721 private nft;
-    IERC20 private wEth; 
+    IERC20 private wEth;
 
     constructor(
         FakeKairos _kairos,

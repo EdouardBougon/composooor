@@ -1,7 +1,9 @@
 [profile.default]
 src = 'contracts'
-out = 'out'
+out = 'out/foundry'
 libs = ["node_modules", "lib"]
 test = 'tests'
-cache_path  = 'cache_forge'
-fs_permissions = [{ access = "write", path = "./deployment/.env"}]
+cache_path  = 'out/cache_forge'
+broadcast = 'out/foundry-broadcast'
+fs_permissions = [{ access = "write", path = "./.env"}]
+allow_paths= ['../../node_modules']

@@ -12,7 +12,7 @@ export default defineConfig({
       }
     })
   ],
-  envDir: "../contract/deployment/",
+  envDir: "../contract/",
   build: {
     outDir: "./dist"
   }

@@ -24,7 +24,7 @@ contract TestFull is Test {
 
     function setUp() public {
         address f39 = vm.addr(testPKey);
-        vm.label(f39 , "F39");
+        vm.label(f39, "F39");
         wEth = new MockWeth();
         kairos = new FakeKairos(wEth);
         flashLender = new FlashLender(wEth);
@@ -40,7 +40,7 @@ contract TestFull is Test {
         nft.approve(address(marketPlace), 1);
     }
 
-    function testTmp() public {
+    function testTmp() public view {
         // console.logBytes4(MissingOffchainDataError.selector);
         abi.decode(hex"ab3e92cf0000000000000000000000000165878a594ca255338adfa4d48449f69242eb8f000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000001d687474703a2f2f6c6f63616c686f73743a383038302f6170692f6275790000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c90000000000000000000000000000000000000000000000000000000000000001",
         (bytes4, address, string, bytes));
@@ -52,28 +52,16 @@ contract TestFull is Test {
             functionSelector: buyNowPayLater.buyNowPayLater.selector,
             data: emptyBytes
         });
-        SaleOffer memory saleOffer = SaleOffer({
-                    implem: nft,
-                    tokenId: 1,
-                    price: 1 ether
-                });
+        SaleOffer memory saleOffer = SaleOffer({implem: nft, tokenId: 1, price: 1 ether});
         Call memory registerCall = Call({
             callee: address(buyNowPayLater),
             functionSelector: buyNowPayLater.recordParameter.selector,
-            data: abi.encode(
-                abi.encode(
-                    saleOffer,
-                    genSignature(saleOffer)
-                )
-            )
+            data: abi.encode(abi.encode(saleOffer, genSignature(saleOffer)))
         });
-        Call memory approvalCall =  Call({
+        Call memory approvalCall = Call({
             callee: address(wEth),
             functionSelector: wEth.approve.selector,
-            data: abi.encode(
-                address(buyNowPayLater),
-                uint256(1 ether)
-            )
+            data: abi.encode(address(buyNowPayLater), uint256(1 ether))
         });
         Call[] memory calls = new Call[](3);
         calls[0] = registerCall;
@@ -82,7 +70,7 @@ contract TestFull is Test {
         wallet.execute(calls);
     }
 
-    function genSignature(SaleOffer memory saleOffer) internal view returns(bytes memory) {
+    function genSignature(SaleOffer memory saleOffer) internal view returns (bytes memory) {
         bytes32 digest = keccak256(abi.encode(saleOffer));
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(testPKey, digest);
         return bytes.concat(r, s, bytes1(v));

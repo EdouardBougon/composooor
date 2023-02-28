@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/kairos-loan/composooor#readme",
   "scripts": {
-    "start:dev": "vite --host 0.0.0.0 --port 3000",
+    "start:dev": " yarn -- vite --host 0.0.0.0 --port 3000",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint",

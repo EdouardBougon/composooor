@@ -5,6 +5,6 @@
     "esModuleInterop": true
   },
   "include": [
-    "./out/types"
+    "./out/tc"
   ]
 }

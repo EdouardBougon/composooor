@@ -2,53 +2,29 @@
   "name": "@composooor/contract",
   "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "./out/types/index.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kairos-loan/composooor.git"
-  },
-  "author": "Kairos Loan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kairos-loan/composooor/issues"
-  },
-  "homepage": "https://github.com/kairos-loan/composooor#readme",
+  "description": "Example Contracts",
+  "main": "./out/tc/index.ts",
   "scripts": {
-    "node:hardhat": "hardhat node --hostname 0.0.0.0",
     "node:anvil": "anvil --silent --block-time 1 > ./out/anvil-logs.txt",
-    "build": "hardhat compile",
-    "build:watch": "hardhat watch compile",
-    "run": "hardhat run --",
-    "deploy:localhost:hardhat": "hardhat run ./scripts/deployLocalhost.ts --network localhost",
-    "deploy:localhost:forge": "forge script ./scripts/Deploy.sol -f http://localhost:8545 --broadcast --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
-    "deploy:localhost:hardhat:watch": "hardhat watch deployLocalhost --network localhost",
-    "lint": "eslint --max-warnings=0 .",
-    "lint:fix": "eslint --fix .",
-    "lint:sol": "hardhat check",
-    "lint:all": "npm run lint && npm run lint:sol",
+    "generate": "typechain --target ethers-v5 --out-dir ./out/tc ./out/foundry/BuyNowPayLater.sol/BuyNowPayLater.json ./out/foundry/SmartContractWallet.sol/SmartContractWallet.json ./out/foundry/MarketPlace.sol/MarketPlace.json",
+    "build": "forge build --extra-output-files abi",
+    "deploy:localhost": "forge script ./scripts/Deploy.sol -f http://localhost:8545 --broadcast --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "lint": "solhint './contracts/**/*.sol ./scripts/**/*.sol ./tests/**/*.sol' -c ../../.solhint.json",
+    "lint:fix": "yarn lint --fix",
     "test": "forge test",
     "test:watch": "forge test --watch"
   },
   "devDependencies": {
     "@ethersproject/contracts": "^5.7.0",
-    "@nomicfoundation/hardhat-foundry": "^1.0.0",
-    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
-    "@nomiclabs/hardhat-solhint": "^3.0.0",
+    "@typechain/ethers-v5": "^10.2.0",
     "ds-test": "github:dapphub/ds-test",
     "forge-std": "github:foundry-rs/forge-std#master",
-    "hardhat": "^2.12.6",
-    "hardhat-abi-exporter": "^2.10.1",
-    "hardhat-address-exporter": "^0.0.4",
-    "hardhat-watcher": "^2.5.0",
     "prettier-plugin-solidity": "^1.1.1"
   },
   "dependencies": {
-    "@nomiclabs/hardhat-etherscan": "^3.1.6",
+    "@composooor/composooor": "workspace:*",
     "@openzeppelin/contracts": "^4.8.1",
-    "chai-as-promised": "^7.1.1",
-    "hardhat-gas-reporter": "^1.0.9",
-    "ordinal": "^1.0.3",
-    "solidity-coverage": "^0.8.2"
+    "solidity-coverage": "^0.8.2",
+    "typechain": "^8.1.1"
   }
 }

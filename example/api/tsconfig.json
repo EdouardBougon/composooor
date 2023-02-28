@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../composooor"
+      "path": "../../packages/composooor"
     },
     {
       "path": "../contract"

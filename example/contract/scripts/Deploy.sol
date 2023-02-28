@@ -51,7 +51,7 @@ contract Deploy is Script {
         toWrite = addEnv(toWrite, "VITE_NFT", vm.toString(address(nft)));
         toWrite = addEnv(toWrite, "VITE_WALLET", vm.toString(address(wallet)));
 
-        vm.writeFile("./deployment/.env", toWrite);
+        vm.writeFile("./.env", toWrite);
     }
 
     function addEnv(

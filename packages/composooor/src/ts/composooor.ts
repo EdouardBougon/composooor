@@ -1,16 +1,16 @@
 import type { UsePrepareContractWriteConfig } from 'wagmi';
-import type { MissingOffchainDataError } from './errors';
+import type { MissingOffchainDataError } from './types/errors';
 import type { ComposooorQueryParams, ComposooorApiResponse } from './api/api.interface';
-import type { PrefixedBy0x } from './common';
+import type { PrefixedBy0x } from './types/common';
 import type { BigNumber } from 'ethers';
 
 import { useEffect, useState } from 'react';
 import { useProvider, useContractWrite } from 'wagmi';
 import { Contract, utils } from 'ethers';
 
-import { abi as scWalletAbi } from './abi/SmartContractWallet__factory';
-import { useAsync } from './utils/useAsync';
-import { useAxiosGet } from './utils/useAxios';
+import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
+import { useAsync } from './hooks/useAsync';
+import { useAxiosGet } from './hooks/useAxios';
 
 /**
  * Call

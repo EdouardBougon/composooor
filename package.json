@@ -6,11 +6,12 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "cp -rf ./example/install/forge-std-interfaces ./node_modules/forge-std/src/interfaces",
     "api": "yarn workspace @composooor/api",
     "app": "yarn workspace @composooor/app",
     "contract": "yarn workspace @composooor/contract",
     "composooor": "yarn workspace @composooor/composooor",
-    "start:dev": "yarn run contract node:anvil & yarn run contract deploy:localhost:forge && cross-env $(grep -v '^#' example/contract/deployment/.env | xargs) && concurrently \"yarn run api start:dev\" \"yarn run app start:dev\""
+    "start:dev": "yarn contract node:anvil & sleep 3 && yarn contract deploy:localhost && yarn contract generate && concurrently \"yarn api start:dev\" \"yarn app start:dev\""
   },
   "devDependencies": {
     "@types/node": "^16.0.0",

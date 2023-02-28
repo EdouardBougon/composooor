@@ -25,8 +25,9 @@
   "files.exclude": {},
   "git.ignoreLimitWarning": true,
   "solidity.remappings": [
-    "@openzeppelin/=./example/contract/node_modules/@openzeppelin/",
-    "forge-std/=./example/contract/node_modules/forge-std/src/",
-    "ds-test/=./example/contract/node_modules/ds-test/src/"
+    "@openzeppelin/=./node_modules/@openzeppelin/",
+    "@composooor/=./packages/composooor/src/sol/",
+    "forge-std/=./node_modules/forge-std/src/",
+    "ds-test/=./node_modules/ds-test/src/"
   ]
 }

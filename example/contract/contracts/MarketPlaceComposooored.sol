@@ -3,13 +3,13 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "./ComposooorRegister.sol";
+import "@composooor/ComposooorRegister.sol";
 import "./MarketPlace.sol";
 
 contract MarketPlaceComposooored is ComposooorRegister {
     MarketPlace private immutable marketplace;
 
-    constructor(MarketPlace _marketplace){
+    constructor(MarketPlace _marketplace) {
         marketplace = _marketplace;
     }
 

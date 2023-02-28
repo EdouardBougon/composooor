@@ -1,4 +1,4 @@
-import type { PrefixedBy0x } from '../common';
+import type { PrefixedBy0x } from '../types/common';
 
 /**
  * Composooor Query Params

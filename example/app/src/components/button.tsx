@@ -17,8 +17,8 @@ type PrefixifyBy0x<T> = T extends string
   ? T
   : T extends object
   ? {
-      [k in keyof T]: PrefixifyBy0x<T[k]>
-    }
+    [k in keyof T]: PrefixifyBy0x<T[k]>
+  }
   : T
 
 function useAxiosGet<QueryParamsType, ReturnType>(
@@ -109,8 +109,8 @@ const ButtonPay = () => {
   // console.log('ButtonPay', import.meta.env.VITE_WALLET, import.meta.env.VITE_BUYNOWPAYLATER);
 
   const bnplIface = BuyNowPayLater__factory.createInterface()
-  const {write} = useMyComposooor(
-    BuyNowPayLater__factory.getContract('0x0165878A594ca255338adfa4d48449f69242Eb8F',bnplIface),
+  const { write } = useMyComposooor(
+    BuyNowPayLater__factory.getContract('0x0165878A594ca255338adfa4d48449f69242Eb8F', bnplIface),
     'buyNowPayLater', [])
 
   // useComposooor({

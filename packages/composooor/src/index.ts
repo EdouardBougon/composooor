@@ -1,4 +1,4 @@
-export * from './ts/errors';
+export * from './ts/types/errors';
 export * from './ts/api/api.interface';
-export { useComposooor } from './ts/composooor';
-export * from './ts/common';
+export * from './ts/composooor';
+export * from './ts/types/common';
