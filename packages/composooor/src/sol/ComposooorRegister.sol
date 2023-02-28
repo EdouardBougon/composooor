@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-error MissingOffchainDataError(address registryAddress, string url, bytes abiArgs);
+import "./MissingOffchainDataError.sol";
 
 /// @title Composooor Parameter Register
 /// @author Kairos Loan (@kairos-loan)
@@ -22,7 +22,10 @@ contract ComposooorRegister {
     /// @notice as a contract, consume a pre-computed parameter,
     ///     successive calls will give different parameters (computed for context)
     /// @dev correctness of the data MUST be checked
-    function consumeParameter(string memory url, bytes memory abiArgs) internal returns (bytes memory data_) {
+    function consumeParameter(
+        string memory url,
+        bytes memory abiArgs
+    ) internal returns (bytes memory data_) {
         data_ = data[tx.origin][nonce[tx.origin] + 1];
         if (data_.length == 0) {
             revert MissingOffchainDataError(address(this), url, abiArgs);

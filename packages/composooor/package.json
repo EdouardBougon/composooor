@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.ts",
+  "files": [
+    "./src/sol"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kairos-loan/composooor.git"

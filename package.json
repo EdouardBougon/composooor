@@ -2,7 +2,8 @@
   "name": "@composooor/composooor-project",
   "private": true,
   "workspaces": [
-    "example/*"
+    "example/*",
+    "packages/*"
   ],
   "scripts": {
     "api": "yarn workspace @composooor/api",

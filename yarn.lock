@@ -401,9 +401,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@composooor/composooor@workspace:*, @composooor/composooor@workspace:example/composooor":
+"@composooor/composooor@workspace:*, @composooor/composooor@workspace:packages/composooor":
   version: 0.0.0-use.local
-  resolution: "@composooor/composooor@workspace:example/composooor"
+  resolution: "@composooor/composooor@workspace:packages/composooor"
   peerDependencies:
     react: ^18.2.0
     wagmi: ^0.11.7

@@ -32,7 +32,7 @@
       "path": "./tsconfig.node.json"
     },
     {
-      "path": "../composooor"
+      "path": "../../packages/composooor"
     }
   ]
 }
