@@ -1,10 +1,10 @@
 import { useComposooor } from "@composooor/composooor";
 import { useCallback } from 'react';
-import { BuyNowPayLater__factory } from '@composooor/contract';
+import { BuyNowPayLater__factory, ComposooorRegister__factory } from '@composooor/contract';
 import { BuyNowPayLater } from '@composooor/contract';
 import { BigNumber, Contract } from 'ethers';
 import { CallStructOutput } from '@composooor/contract/out/types/contracts/SmartContractWallet';
-import { defaultAbiCoder } from 'ethers/lib/utils.js';
+import { defaultAbiCoder, FormatTypes } from 'ethers/lib/utils.js';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { SmartContractWallet__factory } from '@composooor/contract';
 // import { ContractAddresses } from '../config/addresses/addresses';
@@ -24,6 +24,37 @@ const abiCoder = defaultAbiCoder
 const emptyBytes = '0x'
 type prefixedBy0x = `0x${string}`
 
+function extractErrorHex(error: Error){
+  let str = "0x"
+  if (error){
+    if (error.message) {
+      const message = error.message 
+      let match = message.match(/error={.*}/g)
+      if(match) {
+        str = match[0]
+        if (str.match(/"data":{.*}/g)){
+          str = (str.match(/"data":{.*}/g) as Array<string>)[0]
+          str = (str.match(/0x[0-9a-f]*/g) as Array<string>)[0]
+        }
+      }
+    }
+  }
+  return str
+}
+
+function getPrepValues(error: Error) {
+  const MissingDataSigHash = "0xab3e92cf"
+  const errorHex = extractErrorHex(error)
+  const foundSelector = errorHex.slice(0,10);
+  const abiEncodedErrorData = "0x".concat(errorHex.substring(10))
+  if (foundSelector === MissingDataSigHash) {
+    const decoded = abiCoder.decode(["address", "string", "bytes"], abiEncodedErrorData)
+    return {needsPrep: true, address: decoded[0], url: decoded[1], argsBytes: decoded[2]}
+  } else {
+    return {needsPrep: false, error: error}
+  }
+}
+
 function useMyComposooor(contract: Contract, funcName: string, args: Array<any>) {
   const scWalletAddr = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707'
 
@@ -35,21 +66,20 @@ function useMyComposooor(contract: Contract, funcName: string, args: Array<any>)
     }
   ]
 
-  const scWWalletIface = SmartContractWallet__factory.createInterface()
-  const scWallet = SmartContractWallet__factory.getContract(scWalletAddr, scWWalletIface)
-  // console.log(
-  //  scWallet.callStatic.execute([calls]))
-
-  const {config, error, data} = usePrepareContractWrite({
+  const {config, error} = usePrepareContractWrite({
     address: scWalletAddr,
     abi: SmartContractWallet__factory.abi,
     functionName: 'execute',
     args: [calls]
   })
 
-  console.log(data);
-  
-  
+  if (error) {
+    const prep = getPrepValues(error)
+    if (prep.needsPrep) {
+      
+    }
+  }
+
   const { write } = useContractWrite(config)
   return { write }
 }
