@@ -7,4 +7,8 @@ contract MockWeth is ERC20 {
     constructor() ERC20("Wrapped Ethereum", "WETH") {
         _mint(msg.sender, 100 ether);
     }
+
+    function give(address to) public {
+        _mint(to, 100 ether);
+    }
 }
