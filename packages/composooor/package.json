@@ -4,7 +4,7 @@
   "description": "Composooor",
   "main": "./src/index.ts",
   "files": [
-    "/src/sol/**/*.sol"
+    "src"
   ],
   "repository": {
     "type": "git",

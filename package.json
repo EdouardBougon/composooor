@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "postinstall": "cp -rf ./example/install/forge-std-interfaces ./node_modules/forge-std/src/interfaces",
+    "publish:composooor": "cd packages/composooor && npm publish --access public",
     "api": "yarn workspace @composooor/example-api",
     "app": "yarn workspace @composooor/example-app",
     "contract": "yarn workspace @composooor/example-contract",
