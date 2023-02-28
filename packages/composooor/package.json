@@ -1,7 +1,13 @@
 {
   "name": "@composooor/composooor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Composooor",
+  "keywords": [
+    "solidity",
+    "typescript",
+    "ethereum",
+    "EVM"
+  ],
   "main": "./src/index.ts",
   "files": [
     "src"
