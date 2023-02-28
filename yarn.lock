@@ -356,6 +356,7 @@ __metadata:
   resolution: "@composooor/app@workspace:example/app"
   dependencies:
     "@composooor/composooor": "workspace:*"
+    "@composooor/contract": "workspace:^"
     "@rainbow-me/rainbowkit": ^0.11.0
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
@@ -409,7 +410,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@composooor/contract@workspace:example/contract":
+"@composooor/contract@workspace:^, @composooor/contract@workspace:example/contract":
   version: 0.0.0-use.local
   resolution: "@composooor/contract@workspace:example/contract"
   dependencies:

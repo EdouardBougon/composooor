@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@composooor/composooor": "workspace:*",
+    "@composooor/contract": "workspace:^",
     "@rainbow-me/rainbowkit": "^0.11.0",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
