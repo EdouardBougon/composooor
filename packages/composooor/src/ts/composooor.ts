@@ -2,15 +2,15 @@ import type { UsePrepareContractWriteConfig } from 'wagmi';
 import type { MissingOffchainDataError } from './types/errors';
 import type { ComposooorQueryParams, ComposooorApiResponse } from './api/api.interface';
 import type { PrefixedBy0x } from './types/common';
-import type { BigNumber } from 'ethers';
 
+import { defaultAbiCoder } from 'ethers/lib/utils.js';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useProvider, useContractWrite } from 'wagmi';
 import { Contract, utils } from 'ethers';
 
 import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 import { useAsync } from './hooks/useAsync';
-import { useAxiosGet } from './hooks/useAxios';
 
 /**
  * Call
@@ -32,73 +32,56 @@ export type UseComposooorConfig = Required<
 export type UseComposooorResult = ReturnType<typeof useContractWrite>;
 
 /**
- *
- * @param config
- * @returns
- */
-interface RevertMessage {
-  reason: string;
-}
-
-/**
  * useComposooor
  */
 export function useComposooor(config: UseComposooorConfig): UseComposooorResult {
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
-  const [data, setData] = useState<PrefixedBy0x>();
-  // const [contractWriteResult, setContractWriteResult] = useState<UseComposooorResult>();
-  const [missingOffchainDataError, setMissingOffchainDataError] = useState<MissingOffchainDataError>();
-
+  const [calls, setCalls] = useState<Call[]>([]);
   const provider = useProvider({ chainId: config.chainId });
 
   console.log('useComposooor');
 
-  const [calls, setCalls] = useState<Call[]>([
-    {
-      callee: config.address,
-      functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
-      data: `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
-    },
-  ]);
+  useEffect(() => {
+    setCalls([
+      {
+        callee: config.address,
+        functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
+        data: `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
+      },
+    ]);
+  }, []);
 
-  const { error: simulationError } = useAsync<BigNumber, RevertMessage>(async () => {
-    console.log('estimateGas', calls);
+  useAsync(async () => {
     const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider);
 
-    return scWalletContract.estimateGas.execute(calls);
-  }, [provider]);
+    console.log('try execute');
 
-  useEffect(() => {
-    if (simulationError === undefined) {
-      return;
+    try {
+      await scWalletContract.estimateGas.execute(calls);
+    } catch (e) {
+      console.log('try execute error');
+      console.log(e);
+      const error: MissingOffchainDataError | undefined = decodeRevertMessage(e as Error);
+
+      if (error === undefined) {
+        return;
+      }
+
+      const { data: responseDate } = await axios.get<ComposooorQueryParams, ComposooorApiResponse>(error.url, {
+        params: {
+          args: error.abiArgs,
+        },
+      });
+
+      const callToRegisterData: Call = {
+        callee: error.registryAddress,
+        functionSelector: utils.id('recordParameter(bytes)').slice(0, 10) as PrefixedBy0x,
+        data: utils.defaultAbiCoder.encode(['bytes'], [responseDate]) as PrefixedBy0x,
+      };
+
+      setCalls((previousCalls: Call[]) => [callToRegisterData, ...previousCalls]);
     }
-
-    const error: MissingOffchainDataError = decodeRevertMessage(simulationError);
-
-    setMissingOffchainDataError(error);
-
-    const { data: responseDate } = useAxiosGet<ComposooorQueryParams, ComposooorApiResponse>(error.url, {
-      params: {
-        args: error.abiArgs,
-      },
-    });
-
-    setData(responseDate?.data);
-  }, [simulationError]);
-
-  useEffect(() => {
-    if (data === undefined || missingOffchainDataError === undefined) {
-      return;
-    }
-
-    const callToRegisterData: Call = {
-      callee: missingOffchainDataError.registryAddress,
-      functionSelector: utils.id('recordParameter(bytes)').slice(0, 10) as PrefixedBy0x,
-      data: utils.defaultAbiCoder.encode(['bytes'], [data]) as PrefixedBy0x,
-    };
-
-    setCalls((previousCalls: Call[]) => [callToRegisterData, ...previousCalls]);
-  }, [data, missingOffchainDataError]);
+  }, [provider, calls]);
 
   return useContractWrite({
     mode: 'recklesslyUnprepared',
@@ -115,16 +98,39 @@ export function useComposooor(config: UseComposooorConfig): UseComposooorResult 
  * Example:
  * `Error: VM Exception while processing transaction: reverted with custom error 'MissingOffchainDataError("0x42Cc87749B4031c53181692c537622e5c3b7d061", "https://composooor.com/api", "0x1234")'`
  */
-function decodeRevertMessage(error: RevertMessage): MissingOffchainDataError {
-  console.log(error);
-  if (error.reason.match('MissingOffchainDataError') === null) {
-    throw new Error(`Unkown error: ${error.reason}`);
+function decodeRevertMessage(error: Error): MissingOffchainDataError | undefined {
+  const abiCoder = defaultAbiCoder;
+  const missingDataSigHash = '0xab3e92cf';
+  const errorHex = extractErrorHex(error.message);
+  const foundSelector = errorHex.slice(0, 10);
+  const abiEncodedErrorData = '0x'.concat(errorHex.substring(10));
+
+  if (foundSelector === missingDataSigHash) {
+    const decoded = abiCoder.decode(['address', 'string', 'bytes'], abiEncodedErrorData);
+
+    return { registryAddress: decoded[0], url: decoded[1], abiArgs: decoded[2] };
   }
 
-  const [url, abiArgs, registryAddress]: string[] = error.reason
-    .split('MissingOffchainDataError("')[1]
-    .split('")')[0]
-    .split('", "');
+  return undefined;
+}
 
-  return { url, abiArgs, registryAddress } as MissingOffchainDataError;
+/**
+ * extractErrorHex
+ */
+function extractErrorHex(message: string): string {
+  let str = '0x';
+
+  if (message) {
+    const match = message.match(/error={.*}/g);
+
+    if (match) {
+      str = match[0];
+      if (str.match(/"data":{.*}/g)) {
+        str = (str.match(/"data":{.*}/g) as string[])[0];
+        str = (str.match(/0x[0-9a-f]*/g) as string[])[0];
+      }
+    }
+  }
+
+  return str;
 }
