@@ -40,6 +40,10 @@ contract TestFull is Test {
         nft.approve(address(marketPlace), 1);
     }
 
+    function testTmp() public {
+        console.logBytes4(MissingOffchainDataError.selector);
+    }
+
     function testFull() public {
         Call memory bnplCall = Call({
             callee: address(buyNowPayLater),

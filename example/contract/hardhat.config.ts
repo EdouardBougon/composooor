@@ -15,22 +15,13 @@ const config: HardhatUserConfig = {
   networks: {
     localhost: {
       url: 'http://0.0.0.0:8545',
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-      },
       chainId: 31337,
     },
     hardhat: {
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-      },
       chainId: 31337,
     },
     goerli: {
       url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY ?? ''}`,
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-      },
     },
   },
   paths: {
