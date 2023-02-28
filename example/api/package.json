@@ -1,17 +1,8 @@
 {
-  "name": "@composooor/api",
+  "name": "@composooor/example-api",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kairos-loan/composooor.git"
-  },
-  "author": "Kairos Loan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kairos-loan/composooor/issues"
-  },
-  "homepage": "https://github.com/kairos-loan/composooor#readme",
+  "description": "Composooor Api Example",
   "scripts": {
     "build": "tsc --build --force",
     "start:dev": "ts-node-dev ./src/server.ts --build --force",

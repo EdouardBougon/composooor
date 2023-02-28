@@ -7,9 +7,9 @@
   ],
   "scripts": {
     "postinstall": "cp -rf ./example/install/forge-std-interfaces ./node_modules/forge-std/src/interfaces",
-    "api": "yarn workspace @composooor/api",
-    "app": "yarn workspace @composooor/app",
-    "contract": "yarn workspace @composooor/contract",
+    "api": "yarn workspace @composooor/example-api",
+    "app": "yarn workspace @composooor/example-app",
+    "contract": "yarn workspace @composooor/example-contract",
     "composooor": "yarn workspace @composooor/composooor",
     "start:dev": "yarn contract node:anvil & sleep 3 && yarn contract deploy:localhost && yarn contract generate && concurrently \"yarn api start:dev\" \"yarn app start:dev\""
   },
@@ -18,6 +18,8 @@
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/eslint-plugin-tslint": "^5.23.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.5.0",
@@ -32,13 +34,9 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-unicorn": "^42.0.0",
     "prettier": "^2.8.2",
-    "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "concurrently": "^7.6.0",
-    "cross-env": "^7.0.3",
     "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.3"
   },
   "packageManager": "yarn@3.4.1"
 }

@@ -1,8 +1,8 @@
 {
-  "name": "@composooor/contract",
+  "name": "@composooor/example-contract",
   "private": true,
   "version": "1.0.0",
-  "description": "Example Contracts",
+  "description": "Composooor Contract Example",
   "main": "./out/tc/index.ts",
   "scripts": {
     "node:anvil": "anvil --silent --block-time 1 > ./out/anvil-logs.txt",

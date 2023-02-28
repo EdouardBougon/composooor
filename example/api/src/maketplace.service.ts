@@ -1,7 +1,7 @@
-import type { SaleOfferStruct } from '@composooor/contract/out/tc/MarketPlace';
+import type { SaleOfferStruct } from '@composooor/example-contract/out/tc/MarketPlace';
 
 import { ethers, Wallet } from 'ethers';
-import { MarketPlace__factory } from '@composooor/contract';
+import { MarketPlace__factory } from '@composooor/example-contract';
 
 /**
  * Offer

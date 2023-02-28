@@ -1,18 +1,8 @@
 {
-  "name": "@composooor/app",
+  "name": "@composooor/example-app",
   "private": true,
   "version": "1.0.0",
-  "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kairos-loan/composooor.git"
-  },
-  "author": "Kairos Loan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kairos-loan/composooor/issues"
-  },
-  "homepage": "https://github.com/kairos-loan/composooor#readme",
+  "description": "Composooor App Example",
   "scripts": {
     "start:dev": " yarn -- vite --host 0.0.0.0 --port 3000",
     "build": "vite build",
@@ -22,7 +12,7 @@
   },
   "dependencies": {
     "@composooor/composooor": "workspace:*",
-    "@composooor/contract": "workspace:^",
+    "@composooor/example-contract": "workspace:^",
     "@rainbow-me/rainbowkit": "^0.11.0",
     "ethers": "^5.7.2",
     "react": "^18.2.0",

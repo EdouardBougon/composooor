@@ -2,10 +2,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "out/ts",
+    "outDir": "dist",
     "rootDir": "src"
   },
   "include": [
-    "src"
+    "src/sol"
   ]
 }
