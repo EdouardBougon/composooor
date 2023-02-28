@@ -9,7 +9,7 @@
     "app": "yarn workspace @composooor/app",
     "contract": "yarn workspace @composooor/contract",
     "composooor": "yarn workspace @composooor/composooor",
-    "start:dev": "yarn run contract node:hardhat & concurrently \"yarn run api start:dev\" \"yarn run app start:dev\" \"yarn run contract deploy:localhost:watch\""
+    "start:dev": "yarn run contract node:anvil & concurrently \"yarn run api start:dev\" \"yarn run app start:dev\" \"yarn run contract deploy:localhost:forge\""
   },
   "devDependencies": {
     "@types/node": "^16.0.0",

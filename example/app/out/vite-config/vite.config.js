@@ -11,6 +11,7 @@ export default defineConfig({
             }
         })
     ],
+    envDir: "../contract/",
     build: {
         outDir: "./dist"
     }

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import type { Request, Response } from 'express';
-import type { ComposooorApiResponse, ComposooorQueryParams } from 'composooor';
+import type { ComposooorApiResponse, ComposooorQueryParams } from '@composooor/composooor';
 import type { SignedOffer } from './maketplace.service';
 
-import * as cors from 'cors';
-import * as express from 'express';
+import cors from 'cors';
+import express from 'express';
 import { ethers } from 'ethers';
 
 import { getBuyArgs, getMockSignedOffer } from './maketplace.service';
