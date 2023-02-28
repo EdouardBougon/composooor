@@ -7,9 +7,11 @@ import { CallStructOutput } from '@composooor/contract/out/types/contracts/Smart
 import { defaultAbiCoder, FormatTypes } from 'ethers/lib/utils.js';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { SmartContractWallet__factory } from '@composooor/contract';
-// import { ContractAddresses } from '../config/addresses/addresses';
+import {UseAsyncReturn, useAsync} from '../../../composooor/src/ts/utils/useAsync';
+import {AxiosRequestConfig} from 'axios';
+import axios from 'axios';
 
-export type PrefixifyBy0x<T> = T extends string
+type PrefixifyBy0x<T> = T extends string
   ? prefixedBy0x
   : T extends BigNumber
   ? T
@@ -18,6 +20,16 @@ export type PrefixifyBy0x<T> = T extends string
       [k in keyof T]: PrefixifyBy0x<T[k]>
     }
   : T
+
+function useAxiosGet<QueryParamsType, ReturnType>(
+  url: string,
+  options: AxiosRequestConfig<QueryParamsType>,
+  skipIfDidntChanged?: React.DependencyList,
+): UseAsyncReturn<ReturnType> {
+  return useAsync(async () => {
+    return axios.get<QueryParamsType, ReturnType>(url, options);
+  }, skipIfDidntChanged);
+}
 
 type Call = PrefixifyBy0x<Omit<CallStructOutput, keyof [string, string, string]>>
 const abiCoder = defaultAbiCoder
@@ -57,6 +69,9 @@ function getPrepValues(error: Error) {
 
 function useMyComposooor(contract: Contract, funcName: string, args: Array<any>) {
   const scWalletAddr = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707'
+  let registerAddr =   '0x0000000000000000000000000000000000000000'
+  let url = "http://nothing.com"
+  let argsBytes = "0x"
 
   const calls: Call[] = [
     {
@@ -76,9 +91,15 @@ function useMyComposooor(contract: Contract, funcName: string, args: Array<any>)
   if (error) {
     const prep = getPrepValues(error)
     if (prep.needsPrep) {
-      
+      registerAddr = prep.address
+      url = prep.url
+      argsBytes = prep.argsBytes
     }
   }
+
+  const {data: bytesToRegister} = useAxiosGet(url, {params: {
+    args: argsBytes
+  }})
 
   const { write } = useContractWrite(config)
   return { write }
