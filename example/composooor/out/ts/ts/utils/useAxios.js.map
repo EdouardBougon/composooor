@@ -1,0 +1,1 @@
+{"version":3,"file":"useAxios.js","sourceRoot":"","sources":["../../../../src/ts/utils/useAxios.ts"],"names":[],"mappings":";;;;;;AAGA,kDAA0B;AAE1B,yCAAsC;AAEtC,SAAgB,WAAW,CACzB,GAAW,EACX,OAA4C,EAC5C,kBAAyC;IAEzC,OAAO,IAAA,mBAAQ,EAAC,KAAK,IAAI,EAAE;QACzB,OAAO,eAAK,CAAC,GAAG,CAA8B,GAAG,EAAE,OAAO,CAAC,CAAC;IAC9D,CAAC,EAAE,kBAAkB,CAAC,CAAC;AACzB,CAAC;AARD,kCAQC"}

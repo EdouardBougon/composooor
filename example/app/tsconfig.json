@@ -1,19 +1,38 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "noEmit": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "allowJs": false,
+    "esModuleInterop": false,
     "module": "ESNext",
+    "composite": true,
+    "outDir": "out/ts",
+    "rootDir": "/",
+    "sourceMap": false,
+    "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react-jsx",
-    "outDir": "dist"
+    "types": [
+      "vite/client"
+    ]
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "src/appdata/whitelist.json",
+    "./.graphclient/**/*"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     },
     {
-      "path": "../../packages/composooor"
+      "path": "../composooor"
     }
   ]
 }

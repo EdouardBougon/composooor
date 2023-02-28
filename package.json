@@ -1,13 +1,15 @@
 {
-  "name": "@kairos-loan/composooor-project",
+  "name": "@composooor/composooor-project",
+  "private": true,
   "workspaces": [
-    "example/api",
-    "example/app",
-    "example/contract",
-    "packages/composooor"
+    "example/*"
   ],
   "scripts": {
-    "start:dev": "npm run -w @composooor/contract node:hardhat & concurrently \"npm run -w api start:dev\" \"npm run -w app start:dev\" \"npm run -w @composooor/contract deploy:localhost:watch\""
+    "api": "yarn workspace @composooor/api",
+    "app": "yarn workspace @composooor/app",
+    "contract": "yarn workspace @composooor/contract",
+    "composooor": "yarn workspace @composooor/composooor",
+    "start:dev": "yarn run contract node:hardhat & concurrently \"yarn run api start:dev\" \"yarn run app start:dev\" \"yarn run contract deploy:localhost:watch\""
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
@@ -34,5 +36,6 @@
     "concurrently": "^7.6.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0"
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }

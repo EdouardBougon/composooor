@@ -1,5 +1,6 @@
 {
   "name": "@composooor/contract",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "./out/types/index.ts",
@@ -42,6 +43,11 @@
     "prettier-plugin-solidity": "^1.1.1"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.1"
+    "@nomiclabs/hardhat-etherscan": "^3.1.6",
+    "@openzeppelin/contracts": "^4.8.1",
+    "chai-as-promised": "^7.1.1",
+    "hardhat-gas-reporter": "^1.0.9",
+    "ordinal": "^1.0.3",
+    "solidity-coverage": "^0.8.2"
   }
 }

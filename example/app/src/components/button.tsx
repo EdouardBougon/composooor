@@ -1,19 +1,28 @@
-import { composooor } from "../../../../packages/composooor/src";
-import { BuyNowPayLater__factory } from "@composooor/contract";
+import { useComposooor } from "@composooor/composooor";
+import { useCallback } from 'react';
+import { ContractAddresses } from '../config/addresses/addresses';
 
 const ButtonPay = () => {
-  const bytecode =
-    BuyNowPayLater__factory.createInterface().encodeFunctionData(
-      "buyNowPayLater"
-    );
+  console.log('ButtonPay');
 
-  const onClick = () => {
-    composooor(
-      "0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3",
-      "0x42Cc87749B4031c53181692c537622e5c3b7d061",
-      bytecode
-    );
-  };
+  useComposooor({
+    scWalletAddr: ContractAddresses[31337].SmartContractWallet as `0x${string}`,
+    address: ContractAddresses[31337].BuyNowPayLater as `0x${string}`,
+    abi: [{
+      "inputs": [],
+      "name": "buyNowPayLater",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }],
+    functionName: 'buyNowPayLater',
+    args: [],
+  });
+
+  const onClick = useCallback(() => {
+    console.log('onClick')
+    // write?.()
+  }, []);
 
   return <button onClick={onClick}>Pay</button>;
 };

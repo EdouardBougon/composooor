@@ -1,56 +1,40 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
-    "composite": true,
-    "declaration": true,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": false,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "incremental": true,
-    "isolatedModules": true,
-    "lib": [
-      "ESNext"
-    ],
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
-    "noEmitOnError": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "paths": {
-      "*": [
-        "src/types/*"
-      ]
-    },
-    "pretty": false,
-    "removeComments": true,
-    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "target": "ESNext",
+    "declaration": true,
+    "outDir": "./out/ts",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
     "types": [
       "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "useDefineForClassFields": true
+    ], // blocks conflicting globals
+    "forceConsistentCasingInFileNames": true
   },
-  "exclude": [
-    "node_modules",
-    "./build/**/*",
-    "tmp",
-    "dist"
+  "references": [
+    {
+      "path": "./example/api"
+    },
+    {
+      "path": "./example/app"
+    },
+    {
+      "path": "./example/contract"
+    },
+    {
+      "path": "./example/composooor"
+    }
   ],
-  "typeRoots": [
-    "node_modules/@types"
+  "include": [],
+  "exclude": [
+    "**/out",
+    "**/node_modules"
   ]
 }
