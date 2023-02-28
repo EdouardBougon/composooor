@@ -116,8 +116,8 @@ export function useComposooor(config: UseComposooorConfig): UseComposooorResult 
  * `Error: VM Exception while processing transaction: reverted with custom error 'MissingOffchainDataError("0x42Cc87749B4031c53181692c537622e5c3b7d061", "https://composooor.com/api", "0x1234")'`
  */
 function decodeRevertMessage(error: RevertMessage): MissingOffchainDataError {
+  console.log(error);
   if (error.reason.match('MissingOffchainDataError') === null) {
-    console.log(error);
     throw new Error(`Unkown error: ${error.reason}`);
   }
 
