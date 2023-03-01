@@ -24,9 +24,9 @@ const ButtonPay = () => {
   return (
     <button
       onClick={onClick}
-      className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center text-white rounded-lg"
+      className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg"
     >
-      {isLoading && <ClipLoader size={20} color={"#fff"} />}
+      {isLoading && <ClipLoader size={20} color={"#000"} />}
       {isSuccess && <span>Transaction success!</span>}
       {!isLoading && !isSuccess && <span>Buy now</span>}
     </button>

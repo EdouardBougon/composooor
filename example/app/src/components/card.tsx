@@ -8,6 +8,11 @@ const Card = () => {
       <div className="w-72 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <img className="rounded-t-lg w-full" src={nft} alt="" />
         <div className="p-5">
+          <div>
+            <p className="text-white text-2xl text-center underline mb-5">
+              Kairos Eagle
+            </p>
+          </div>
           <div className="flex justify-between">
             <div>
               <p className="text-white text-2xl">#7649</p>
