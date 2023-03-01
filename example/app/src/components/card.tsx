@@ -1,5 +1,5 @@
 import { FaEthereum } from "react-icons/fa";
-import ButtonPay from './button';
+import ButtonPay from "./button";
 
 const Card = () => {
   const mockData = [
@@ -8,59 +8,39 @@ const Card = () => {
       image:
         "https://imagedelivery.net/HifslWxquAKrxzKIDXDdDQ/0xbd17c8020c4f6056c061e18da545011c8dd2c22f7f769b267f0b8af7fcb593e1/w=256",
     },
-    {
-      id: "3249",
-      image:
-        "https://imagedelivery.net/HifslWxquAKrxzKIDXDdDQ/0x5f2d0b2aa96910f6476095097f908fce3841a04b7f388d09518871c470649d7d/w=256",
-    },
-    {
-      id: "8387",
-      image:
-        "https://imagedelivery.net/HifslWxquAKrxzKIDXDdDQ/0xb1827cf8eb4410f6ac43588f041e7bc2497c52327e3c6979d8cfd09c43431adf/w=256",
-    },
   ];
 
   return (
-    <div className="pl-5 pt-5 flex gap-6">
+    <div className="z-10	inset-center">
       {mockData.map((item) => (
-        <div key={item.id} className="w-64 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-72 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
           <img className="rounded-t-lg w-full" src={item.image} alt="" />
           <div className="p-5">
             <div className="flex justify-between">
               <div>
-                <p className="text-gray-700 dark:text-gray-400">#{item.id}</p>
+                <p className="text-white text-2xl">#{item.id}</p>
               </div>
               <div className="flex items-center gap-1">
-                <FaEthereum className="text-gray-700 dark:text-gray-400" />
-                <p className="text-gray-700 dark:text-gray-400">14.85</p>
+                <FaEthereum className="text-white" />
+                <p className="text-white text-2xl">15</p>
               </div>
             </div>
             <div className="flex justify-between pt-2">
               <div>
-                <p className="text-gray-700 dark:text-gray-400">Pay now : </p>
+                <p className="text-white text-2xl">Pay now : </p>
               </div>
               <div className="flex items-center gap-1">
-                <FaEthereum className="text-gray-700 dark:text-gray-400" />
-                <p className="text-gray-700 dark:text-gray-400">8.04</p>
+                <FaEthereum className="text-white" />
+                <p className="text-white text-2xl">1</p>
               </div>
             </div>
             <div className="flex justify-between pt-2">
               <div>
-                <p className="text-gray-700 dark:text-gray-400">Pay later : </p>
+                <p className="text-white text-2xl">Pay later : </p>
               </div>
               <div className="flex items-center gap-1">
-                <FaEthereum className="text-gray-700 dark:text-gray-400" />
-                <p className="text-gray-700 dark:text-gray-400">6.80</p>
-              </div>
-            </div>
-            <div className="flex justify-between pt-2">
-              <div>
-                <p className="text-gray-700 dark:text-gray-400">
-                  Intereste rate:
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-700 dark:text-gray-400">29.01 %</p>
+                <FaEthereum className="text-white" />
+                <p className="text-white text-2xl">14</p>
               </div>
             </div>
             <div className="w-full text-center">

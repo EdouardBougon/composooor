@@ -3,10 +3,11 @@ import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar />
       <Card />
-    </div>
+      <div className="gradient"></div>
+    </>
   );
 }
 
