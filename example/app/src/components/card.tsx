@@ -22,7 +22,7 @@ const Card = () => {
   return (
     <div className="pl-5 pt-5 flex gap-6">
       {mockData.map((item) => (
-        <div className="w-64 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div key={item.id} className="w-64 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
           <img className="rounded-t-lg w-full" src={item.image} alt="" />
           <div className="p-5">
             <div className="flex justify-between">
