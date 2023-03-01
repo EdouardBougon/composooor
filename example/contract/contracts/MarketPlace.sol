@@ -20,8 +20,11 @@ contract MarketPlace {
     }
 
     /// @notice buy a NFT from an offer to sell, signed by seller
+    /// https://eips.ethereum.org/EIPS/eip-191#specification
     function buy(SaleOffer memory offer, bytes memory signature) external {
-        address seller = ECDSA.recover(keccak256(abi.encode(offer)), signature);
+        bytes32 digest = keccak256(abi.encode(offer));
+        bytes32 message = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", digest));
+        address seller = ECDSA.recover(message, signature);
         wEth.transferFrom(msg.sender, seller, offer.price);
         offer.implem.transferFrom(seller, msg.sender, offer.tokenId);
     }

@@ -66,7 +66,8 @@ contract TestFull is Test {
 
     function genSignature(SaleOffer memory saleOffer) internal view returns (bytes memory) {
         bytes32 digest = keccak256(abi.encode(saleOffer));
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(testPKey, digest);
+        bytes32 message = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", digest));
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(testPKey, message);
         return bytes.concat(r, s, bytes1(v));
     }
 }

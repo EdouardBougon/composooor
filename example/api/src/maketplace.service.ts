@@ -55,7 +55,5 @@ export async function getMockSignature(offer: SaleOfferStruct): Promise<string> 
   );
   const payloadHash: string = ethers.utils.keccak256(payload);
 
-  console.log(await wallet.signMessage(ethers.utils.arrayify(payloadHash)));
-
-  return '0xa5e77f16012ab61f1c885cd2fca7d720d9e5c7c6aa2592d0102d425ad29700ce58b5a9e66041d072be396bdfe27a2fa32109a2330571b139be711644042c2fc11c';
+  return wallet.signMessage(ethers.utils.arrayify(payloadHash));
 }

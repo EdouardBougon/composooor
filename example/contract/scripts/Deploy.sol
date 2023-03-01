@@ -65,10 +65,6 @@ contract Deploy is Script {
         vm.stopBroadcast();
 
         SaleOffer memory saleOffer = SaleOffer({implem: nft, tokenId: 1, price: 1 ether});
-        bytes32 digest = keccak256(abi.encode(saleOffer));
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(testPKey, digest);
-        console.logBytes(bytes.concat(r, s, bytes1(v)));
-
 
         toWrite = addEnv(toWrite, "VITE_WETH", vm.toString(address(wEth)));
         toWrite = addEnv(toWrite, "VITE_BUYNOWPAYLATER", vm.toString(address(buyNowPayLater)));
