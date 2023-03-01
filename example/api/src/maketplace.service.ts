@@ -32,7 +32,7 @@ export async function getMockSignedOffer(implem: string, tokenId: string): Promi
   const offer: SaleOfferStruct = {
     implem,
     tokenId,
-    price: 1,
+    price: ethers.utils.parseEther('1'),
   };
 
   return {
@@ -48,12 +48,14 @@ export async function getMockSignedOffer(implem: string, tokenId: string): Promi
  */
 export async function getMockSignature(offer: SaleOfferStruct): Promise<string> {
   // sign from 0xf39
-  const wallet: Wallet = new Wallet('ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80')
+  const wallet: Wallet = new Wallet('ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80');
   const payload: string = ethers.utils.defaultAbiCoder.encode(
     ['address', 'uint256', 'uint256'],
     [offer.implem, offer.tokenId, offer.price],
   );
   const payloadHash: string = ethers.utils.keccak256(payload);
 
-  return wallet.signMessage(ethers.utils.arrayify(payloadHash));
+  console.log(await wallet.signMessage(ethers.utils.arrayify(payloadHash)));
+
+  return '0xa5e77f16012ab61f1c885cd2fca7d720d9e5c7c6aa2592d0102d425ad29700ce58b5a9e66041d072be396bdfe27a2fa32109a2330571b139be711644042c2fc11c';
 }
