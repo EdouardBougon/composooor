@@ -3,15 +3,8 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/all",
-    "prettier",
-  ],
-  ignorePatterns: [
-    "node_modules",
-    ".eslintrc.js",
-  ],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/all", "prettier"],
+  ignorePatterns: ["node_modules", ".eslintrc.js"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "tsconfig.json",
@@ -66,7 +59,7 @@ module.exports = {
             position: "before",
           },
         ],
-        "pathGroupsExcludedImportTypes": ["type"],
+        pathGroupsExcludedImportTypes: ["type"],
         "newlines-between": "always",
       },
     ],
@@ -77,23 +70,27 @@ module.exports = {
     "prettier/prettier": [
       "warn",
       {
-        "printWidth": 120,
-        "tabWidth": 2,
-        "useTabs": false,
-        "endOfLine": "auto",
-        "singleQuote": true,
-        "quoteProps": "consistent",
-        "trailingComma": "all",
-        "arrowParens": "avoid",
-        "semi": true,
-        "bracketSpacing": true
-      }
+        printWidth: 120,
+        tabWidth: 2,
+        useTabs: false,
+        endOfLine: "auto",
+        singleQuote: true,
+        quoteProps: "consistent",
+        trailingComma: "all",
+        arrowParens: "avoid",
+        semi: true,
+        bracketSpacing: true,
+      },
     ],
-    'padding-line-between-statements': [
-      'warn',
-      { blankLine: 'always', prev: '*', next: 'return' },
-      { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
-      { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+    "padding-line-between-statements": [
+      "warn",
+      { blankLine: "always", prev: "*", next: "return" },
+      { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+      {
+        blankLine: "any",
+        prev: ["const", "let", "var"],
+        next: ["const", "let", "var"],
+      },
     ],
 
     "@typescript-eslint/prefer-readonly-parameter-types": "off",
@@ -101,17 +98,23 @@ module.exports = {
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-unnecessary-type-arguments": "off",
     "@typescript-eslint/prefer-regexp-exec": "off",
-    "@typescript-eslint/no-confusing-void-expression": ["warn", { ignoreArrowShorthand: true }],
+    "@typescript-eslint/no-confusing-void-expression": [
+      "warn",
+      { ignoreArrowShorthand: true },
+    ],
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/init-declarations": "off",
-    "@typescript-eslint/require-array-sort-compare": ["warn", { ignoreStringArrays: true }],
+    "@typescript-eslint/require-array-sort-compare": [
+      "warn",
+      { ignoreStringArrays: true },
+    ],
     "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/parameter-properties": "off",
 
     "@typescript-eslint/member-ordering": [
       "warn",
-      { "default": ["field", "constructor", "signature", "method"] }
+      { default: ["field", "constructor", "signature", "method"] },
     ],
 
     "@typescript-eslint/no-explicit-any": "warn",

@@ -1,12 +1,11 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import ButtonPay from "./components/button";
+import Card from "./components/card";
+import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Composooor</h1>
-      <ConnectButton />
-      <ButtonPay />
+    <div>
+      <Navbar />
+      <Card />
     </div>
   );
 }
