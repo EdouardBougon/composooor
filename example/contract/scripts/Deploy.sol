@@ -13,6 +13,7 @@ import "../contracts/SmartContractWallet.sol";
 
 contract Deploy is Script {
     uint testPKey = uint256(bytes32(hex"ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
+    uint testPKey2 = uint256(bytes32(hex"59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"));
     MockWeth wEth;
     BuyNowPayLater buyNowPayLater;
     FakeKairos kairos;
@@ -24,23 +25,30 @@ contract Deploy is Script {
 
     function run() public {
         string memory toWrite = "";
+        address f39 = vm.addr(testPKey);
+        address t2 = vm.addr(testPKey2);
+        vm.label(f39, "F39");
+        vm.label(t2, "T2");
 
         vm.startBroadcast(testPKey);
-        address f39 = vm.addr(testPKey);
-        vm.label(f39, "F39");
         wEth = new MockWeth();
         kairos = new FakeKairos(wEth);
         flashLender = new FlashLender(wEth);
         marketPlace = new MarketPlace(wEth);
         nft = new MockNFT();
+
+        vm.stopBroadcast();
+        vm.startBroadcast(testPKey2);
         wallet = new SmartContractWallet();
+        vm.stopBroadcast();
+        vm.startBroadcast(testPKey);
+
         buyNowPayLater = new BuyNowPayLater(kairos, flashLender, marketPlace, nft, wEth);
         wEth.give(f39);
         wEth.transfer(address(flashLender), 10 ether);
         wEth.transfer(address(wallet), 1 ether);
         wEth.transfer(address(kairos), 1 ether);
         nft.approve(address(marketPlace), 1);
-        // address(wallet).call(hex"472f07fe0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000165878a594ca255338adfa4d48449f69242eb8f1e56d5830000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000");
         vm.stopBroadcast();
 
         toWrite = addEnv(toWrite, "VITE_WETH", vm.toString(address(wEth)));
