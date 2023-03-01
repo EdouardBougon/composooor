@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 struct SaleOffer {
     IERC721 implem;
-    uint tokenId;
-    uint price;
+    uint256 tokenId;
+    uint256 price;
 }
 
 /// @notice NFT marketplace
