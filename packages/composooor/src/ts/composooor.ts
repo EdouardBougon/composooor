@@ -2,11 +2,12 @@ import type { UsePrepareContractWriteConfig } from 'wagmi';
 import type { MissingOffchainDataError } from './types/errors';
 import type { ComposooorQueryParams, ComposooorApiResponse } from './api/api.interface';
 import type { PrefixedBy0x } from './types/common';
+import type { AxiosResponse } from 'axios';
 
 import { defaultAbiCoder } from 'ethers/lib/utils.js';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useProvider, useContractWrite } from 'wagmi';
+import { useProvider, useContractWrite, useAccount } from 'wagmi';
 import { Contract, utils } from 'ethers';
 
 import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
@@ -38,8 +39,7 @@ export function useComposooor(config: UseComposooorConfig): UseComposooorResult 
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
   const [calls, setCalls] = useState<Call[]>([]);
   const provider = useProvider({ chainId: config.chainId });
-
-  console.log('useComposooor');
+  const { address } = useAccount();
 
   useEffect(() => {
     setCalls([
@@ -52,36 +52,39 @@ export function useComposooor(config: UseComposooorConfig): UseComposooorResult 
   }, []);
 
   useAsync(async () => {
-    const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider);
-
-    console.log('try execute');
+    const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider).connect(address as string);
 
     try {
       await scWalletContract.estimateGas.execute(calls);
     } catch (e) {
-      console.log('try execute error');
-      console.log(e);
       const error: MissingOffchainDataError | undefined = decodeRevertMessage(e as Error);
 
       if (error === undefined) {
         return;
       }
 
-      const { data: responseDate } = await axios.get<ComposooorQueryParams, ComposooorApiResponse>(error.url, {
-        params: {
-          args: error.abiArgs,
+      const { data: responseData } = await axios.get<ComposooorQueryParams, AxiosResponse<ComposooorApiResponse>>(
+        error.url,
+        {
+          params: {
+            args: error.abiArgs,
+          },
         },
-      });
+      );
 
       const callToRegisterData: Call = {
         callee: error.registryAddress,
         functionSelector: utils.id('recordParameter(bytes)').slice(0, 10) as PrefixedBy0x,
-        data: utils.defaultAbiCoder.encode(['bytes'], [responseDate]) as PrefixedBy0x,
+        data: utils.defaultAbiCoder.encode(['bytes'], [responseData.data]) as PrefixedBy0x,
       };
 
-      setCalls((previousCalls: Call[]) => [callToRegisterData, ...previousCalls]);
+      setCalls(() => [callToRegisterData, ...calls]);
     }
   }, [provider, calls]);
+
+  if (calls.length === 2) {
+    console.log('Transaction Ready');
+  }
 
   return useContractWrite({
     mode: 'recklesslyUnprepared',
@@ -109,6 +112,8 @@ function decodeRevertMessage(error: Error): MissingOffchainDataError | undefined
     const decoded = abiCoder.decode(['address', 'string', 'bytes'], abiEncodedErrorData);
 
     return { registryAddress: decoded[0], url: decoded[1], abiArgs: decoded[2] };
+  } else {
+    console.log(error);
   }
 
   return undefined;
@@ -121,12 +126,12 @@ function extractErrorHex(message: string): string {
   let str = '0x';
 
   if (message) {
-    const match = message.match(/error={.*}/g);
+    const match = message.match(/error=(.*)/g);
 
     if (match) {
       str = match[0];
-      if (str.match(/"data":{.*}/g)) {
-        str = (str.match(/"data":{.*}/g) as string[])[0];
+      if (str.match(/"data":(.*)"/g)) {
+        str = (str.match(/"data":(.*)"/g) as string[])[0];
         str = (str.match(/0x[0-9a-f]*/g) as string[])[0];
       }
     }

@@ -47,6 +47,7 @@ export async function getMockSignedOffer(implem: string, tokenId: string): Promi
  * Should be the signature of the offer done by the NFT owner
  */
 export async function getMockSignature(offer: SaleOfferStruct): Promise<string> {
+  // sign from 0xf39
   const wallet: Wallet = new Wallet('ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80').connect(
     ethers.providers.getDefaultProvider(),
   );
