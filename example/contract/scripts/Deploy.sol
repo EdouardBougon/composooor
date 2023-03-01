@@ -52,6 +52,16 @@ contract Deploy is Script {
         nft.approve(address(marketPlace), 1);
         vm.stopBroadcast();
         vm.startBroadcast(testPKey2);
+        {
+            Call[] memory calls = new Call[](1);
+            Call memory approvalCall = Call({
+                callee: address(wEth),
+                functionSelector: wEth.approve.selector,
+                data: abi.encode(address(buyNowPayLater), uint256(1 ether))
+            });
+            calls[0] = approvalCall;
+            wallet.execute(calls);
+        }
         vm.stopBroadcast();
 
         SaleOffer memory saleOffer = SaleOffer({implem: nft, tokenId: 1, price: 1 ether});
