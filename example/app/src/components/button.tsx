@@ -31,8 +31,8 @@ const ButtonPay = () => {
     >
       {isTransactionLoading && <ClipLoader size={20} color={"#000"} />}
       {isTransactionSuccess && <span>Transaction success!</span>}
-      {isPrepareError && <span>Transaction not possibe</span>}
       {(isTransactionError || isWritError) && <span>Transaction error!</span>}
+      {isPrepareError && <span>Buy not possibe</span>}
       {isBuyPossible && <span>Buy now</span>}
     </button>
   );
