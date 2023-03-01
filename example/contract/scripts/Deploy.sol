@@ -50,6 +50,10 @@ contract Deploy is Script {
         wEth.transfer(address(kairos), 1 ether);
         nft.approve(address(marketPlace), 1);
         vm.stopBroadcast();
+        vm.startBroadcast(testPKey2);
+        address(wallet).call(hex"08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000254552433732313a207472616e736665722066726f6d20696e636f7272656374206f776e6572000000000000000000000000000000000000000000000000000000");
+        vm.stopBroadcast();
+
 
         toWrite = addEnv(toWrite, "VITE_WETH", vm.toString(address(wEth)));
         toWrite = addEnv(toWrite, "VITE_BUYNOWPAYLATER", vm.toString(address(buyNowPayLater)));
