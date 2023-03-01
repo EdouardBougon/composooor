@@ -48,7 +48,7 @@ contract Deploy is Script {
         wEth.transfer(address(flashLender), 10 ether);
         wEth.transfer(address(wallet), 1 ether);
         wEth.transfer(address(kairos), 1 ether);
-        wEth.transfer(address(t2), 1 ether);
+        wEth.transfer(address(wallet), 1 ether);
         nft.approve(address(marketPlace), 1);
         vm.stopBroadcast();
         vm.startBroadcast(testPKey2);
