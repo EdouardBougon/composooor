@@ -1,8 +1,9 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
+import { panel, text } from '@metamask/snaps-ui';
 import { ethers, utils } from 'ethers';
 import { defaultAbiCoder } from 'ethers/lib/utils';
-import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 import { MissingOffchainDataError } from './types/errors';
+import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 
 const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
 
@@ -33,10 +34,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const wallet = new ethers.Wallet(privKey, provider);
   const { address } = wallet;
 
-  console.log(
-    `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
-  );
-
   const calls: Call[] = [
     {
       callee: address,
@@ -54,37 +51,38 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   ).connect(address as string);
 
   try {
-    await scWalletContract.estimateGas.execute(calls);
+    // await scWalletContract.estimateGas.execute(calls);
   } catch (e) {
-    const error: MissingOffchainDataError | undefined = decodeRevertMessage(
+    const error: Error | MissingOffchainDataError = decodeRevertMessage(
       e as Error,
     );
 
     /* if (error === undefined) {
       return;
     }
-
+    
     const { data: responseData } = await axios.get(error.url, {
       params: {
         args: error.abiArgs,
       },
     });
-
+    
     const callToRegisterData: Call = {
       callee: error.registryAddress,
       functionSelector: utils
-        .id('recordParameter(bytes)')
-        .slice(0, 10) as PrefixedBy0x,
+      .id('recordParameter(bytes)')
+      .slice(0, 10) as PrefixedBy0x,
       data: defaultAbiCoder.encode(
         ['bytes'],
         [responseData.data],
-      ) as PrefixedBy0x,
-    };
+        ) as PrefixedBy0x,
+      };
 
     calls = [callToRegisterData, ...calls];
-  } */
+    } */
+  }
 
-    /* switch (request.method) {
+  switch (request.method) {
     case 'composooor':
       return snap.request({
         method: 'snap_dialog',
@@ -99,7 +97,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         },
       });
     default:
-      throw new Error('Method not found.'); */
+      throw new Error('Method not found.');
   }
 };
 
@@ -112,9 +110,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
  * @param error - Error
  * @returns MissingOffchainDataError | undefined
  */
-function decodeRevertMessage(
-  error: Error,
-): MissingOffchainDataError | undefined {
+function decodeRevertMessage(error: Error): Error | MissingOffchainDataError {
   const abiCoder = defaultAbiCoder;
   const missingDataSigHash = '0xab3e92cf';
   const errorHex = extractErrorHex(error.message);
@@ -135,13 +131,14 @@ function decodeRevertMessage(
   }
   console.log(error);
 
-  return undefined;
+  return error;
 }
 
 /**
  * extractErrorHex
  *
  * @param message
+ * @returns
  */
 function extractErrorHex(message: string): string {
   let str = '0x';
