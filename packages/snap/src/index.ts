@@ -23,7 +23,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   // const flatSig = await wallet.signMessage('Hello World');
   console.log('request', request);
 
-  const config = request.params;
+  const config: any = request.params;
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
 
   const privKey = await snap.request({
@@ -31,12 +31,12 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     params: { version: 1 },
   });
 
-  const wallet = new ethers.Wallet(privKey, provider);
+  const wallet = new ethers.Wallet(privKey as string, provider);
   const { address } = wallet;
 
   const calls: Call[] = [
     {
-      callee: address,
+      callee: address as PrefixedBy0x,
       functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
       data: `0x${iface
         .encodeFunctionData(config.functionName, config.args)

@@ -25,7 +25,6 @@ const ButtonPaySnap = () => {
   };
 
   const handleSendHelloClick = async () => {
-    console.log('handleSendHelloClick');
     try {
       await buyNowPayLater();
     } catch (e) {
@@ -43,6 +42,12 @@ const ButtonPaySnap = () => {
           className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg"
         > Connect Snap </button>
       )}
+
+      <button
+        disabled={!state.isFlask}
+        onClick={handleConnectClick}
+        className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg"
+      > Dev: ReConnect Snap </button>
 
       {state.installedSnap && (
         <button
