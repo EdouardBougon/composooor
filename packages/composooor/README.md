@@ -58,7 +58,6 @@ Example usage:
 
 ```typescript
 const { write, data: dataComposooor } = useComposooor({
-    scWalletAddr: userWallet,
     address: dappAddress,
     abi: dapp.abi,
     functionName: "action",
