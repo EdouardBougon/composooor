@@ -12,7 +12,8 @@
     "app": "yarn workspace @composooor/example-app",
     "contract": "yarn workspace @composooor/example-contract",
     "composooor": "yarn workspace @composooor/composooor",
-    "start:dev": "yarn contract node:anvil & sleep 3 && yarn contract deploy:localhost && yarn contract generate && concurrently \"yarn api start:dev\" \"yarn app start:dev\""
+    "snap": "yarn workspace @composooor/snap",
+    "start:dev": "yarn contract node:anvil & sleep 3 && yarn contract deploy:localhost && yarn contract generate && concurrently \"yarn api start:dev\" \"yarn app start:dev\" \"yarn snap start:dev\""
   },
   "devDependencies": {
     "@types/node": "^16.0.0",

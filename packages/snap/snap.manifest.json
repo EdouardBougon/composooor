@@ -1,0 +1,31 @@
+{
+  "version": "1.0.2",
+  "description": "Composooor",
+  "proposedName": "Composooor Snap",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kairos-loan/composooor.git"
+  },
+  "source": {
+    "shasum": "K4jG+pWxjSS4G/EoIp6oB3YGcAl+1TSmHGh8funbA38=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@composooor/snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_dialog": {},
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": false
+    },
+    "endowment:network-access": {},
+    "endowment:ethereum-provider": {},
+    "snap_getEntropy": {}
+  },
+  "manifestVersion": "0.1"
+}

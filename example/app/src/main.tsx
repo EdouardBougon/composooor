@@ -8,6 +8,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import { MetaMaskProvider } from './snap/context';
 
 const root: HTMLElement | undefined =
   document.getElementById("root") ?? undefined;
@@ -52,7 +53,9 @@ ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <App />
+        <MetaMaskProvider>
+          <App />
+        </MetaMaskProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   </React.StrictMode>

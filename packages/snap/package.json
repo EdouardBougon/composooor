@@ -1,0 +1,56 @@
+{
+  "name": "@composooor/snap",
+  "version": "1.0.2",
+  "description": "Composooor",
+  "keywords": [
+    "solidity",
+    "typescript",
+    "ethereum",
+    "EVM"
+  ],
+  "main": "./src/index.ts",
+  "files": [
+    "dist/",
+    "images/",
+    "snap.manifest.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kairos-loan/composooor.git"
+  },
+  "author": "Kairos Loan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kairos-loan/composooor/issues"
+  },
+  "homepage": "https://github.com/kairos-loan/composooor#readme",
+  "scripts": {
+    "build": "mm-snap build",
+    "build:clean": "yarn clean && yarn build",
+    "build:website": "node ./scripts/build-website.js --max-old-space-size=4096",
+    "clean": "rimraf dist",
+    "lint": "yarn lint:eslint && yarn lint:misc --check",
+    "lint:eslint": "eslint . --cache --ext js,ts",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
+    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
+    "serve": "mm-snap serve",
+    "start:dev": "mm-snap watch"
+  },
+  "dependencies": {
+    "ethers": "^5.4.6"
+  },
+  "devDependencies": {
+    "@lavamoat/allow-scripts": "^2.0.3",
+    "@metamask/auto-changelog": "^2.6.0",
+    "@metamask/eslint-config": "^10.0.0",
+    "@metamask/eslint-config-jest": "^10.0.0",
+    "@metamask/eslint-config-nodejs": "^10.0.0",
+    "@metamask/eslint-config-typescript": "^10.0.0",
+    "@metamask/snaps-cli": "^0.27.1",
+    "@metamask/snaps-types": "^0.27.1",
+    "@metamask/snaps-ui": "^0.27.1",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "rimraf": "^3.0.2"
+  }
+}

@@ -13,11 +13,13 @@
   "dependencies": {
     "@composooor/composooor": "workspace:*",
     "@composooor/example-contract": "workspace:^",
+    "@metamask/providers": "^9.0.0",
     "@rainbow-me/rainbowkit": "^0.11.0",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "react-is": "^18.2.0",
     "react-router-dom": "^6.8.2",
     "react-spinners": "^0.13.8",
     "stylelint": "^15.2.0",
