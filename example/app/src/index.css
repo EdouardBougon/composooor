@@ -43,7 +43,8 @@ body {
   text-transform: uppercase;
   transition: 0.5s;
   background-size: 200% auto;
-  color: white;
+  color: black;
+  font-weight: bold;
   /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;

@@ -5,7 +5,7 @@ import { useWaitForTransaction } from "wagmi";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const ButtonPay = () => {
-  const { write, data: dataComposooor } = useComposooor({
+  const { write, data: dataComposooor, isError: isWritError, isPrepareError } = useComposooor({
     scWalletAddr: "0x8464135c8F25Da09e49BC8782676a84730C318bC",
     address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
     abi: BuyNowPayLater__factory.abi,
@@ -13,22 +13,27 @@ const ButtonPay = () => {
     args: [],
   });
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading: isTransactionLoading, isSuccess: isTransactionSuccess, isError: isTransactionError } = useWaitForTransaction({
     hash: dataComposooor?.hash,
   });
 
   const onClick = useCallback(() => {
     write?.();
-  }, []);
+  }, [write]);
+
+  const isBuyPossible = !isTransactionLoading && !isTransactionSuccess && !isTransactionError && !isWritError && !isPrepareError;
 
   return (
     <button
+      disabled={!isBuyPossible}
       onClick={onClick}
-      className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center text-white rounded-lg"
+      className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg"
     >
-      {isLoading && <ClipLoader size={20} color={"#fff"} />}
-      {isSuccess && <span>Transaction success!</span>}
-      {!isLoading && !isSuccess && <span>Buy now</span>}
+      {isTransactionLoading && <ClipLoader size={20} color={"#000"} />}
+      {isTransactionSuccess && <span>Transaction success!</span>}
+      {(isTransactionError || isWritError) && <span>Transaction error!</span>}
+      {isPrepareError && <span>Buy not possibe</span>}
+      {isBuyPossible && <span>Buy now</span>}
     </button>
   );
 };
