@@ -1,11 +1,9 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
 import { panel, text } from '@metamask/snaps-ui';
-import { ethers, utils } from 'ethers';
+import { utils, providers, Wallet, Contract } from 'ethers';
 import { defaultAbiCoder } from 'ethers/lib/utils';
 import { MissingOffchainDataError } from './types/errors';
 import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
-
-const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
 
 type PrefixedBy0x = `0x${string}`;
 
@@ -19,6 +17,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   origin,
   request,
 }) => {
+  const provider = new providers.JsonRpcProvider();
   // access params: console.log('params', request.params.version);
   // const flatSig = await wallet.signMessage('Hello World');
   console.log('request', request);
@@ -26,14 +25,12 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const config: any = request.params;
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
 
-  const privKey = await snap.request({
-    method: 'snap_getEntropy',
-    params: { version: 1 },
-  });
-
-  const wallet = new ethers.Wallet(privKey as string, provider);
+  // const privKey = await snap.request({ method: 'snap_getEntropy', params: { version: 1 } });
+  const privKey = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
+  
+  const wallet = new Wallet(privKey as string, provider);
   const { address } = wallet;
-
+  
   const calls: Call[] = [
     {
       callee: address as PrefixedBy0x,
@@ -44,18 +41,20 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     },
   ];
 
-  const scWalletContract = new ethers.Contract(
+
+  const scWalletContract = new Contract(
     config.scWalletAddress,
     scWalletAbi,
-    provider,
-  ).connect(address as string);
+    wallet,
+  );
 
   try {
-    // await scWalletContract.estimateGas.execute(calls);
+    console.log(await scWalletContract.estimateGas.execute(calls));
   } catch (e) {
+    console.log(e);
     const error: Error | MissingOffchainDataError = decodeRevertMessage(
       e as Error,
-    );
+      );
 
     /* if (error === undefined) {
       return;
@@ -91,8 +90,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           content: panel([
             text(`Hello, **${origin}**!`),
             text('request: ', request.toString()),
-            text(ethers.BigNumber.from('0x00').toString()),
-            text(ethers.BigNumber.from('0x01').toString()),
           ]),
         },
       });
