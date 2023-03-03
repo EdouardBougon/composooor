@@ -4,7 +4,7 @@ import nft from "../assets/nft.png";
 
 const CardComposooor = () => {
   return (
-    <div className="z-10	inset-center">
+    <div className="z-10">
       <div className="w-72 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <img className="rounded-t-lg w-full" src={nft} alt="" />
         <div className="p-5">
