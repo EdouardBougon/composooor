@@ -1,6 +1,8 @@
 import { defaultSnapOrigin } from '../config';
 import { GetSnapsResponse, Snap } from '../types';
 import { BuyNowPayLater__factory } from "@composooor/example-contract";
+import { PrefixedBy0x } from '@composooor/composooor';
+import { ComposooorMethodParams, OnComposooorRequestArgs } from '@composooor/snap';
 
 /**
  * Get the installed snaps in MetaMask.
@@ -56,22 +58,24 @@ const buyNowPayLaterAbi = BuyNowPayLater__factory.abi;
 /**
  * Invoke the "hello" method from the example snap.
  */
-export const buyNowPayLater = async () => {
-  console.log('buyNowPayLater');
+export const buyNowPayLater = async (connectedAddress: PrefixedBy0x) => {
+  const request: OnComposooorRequestArgs = {
+    method: 'composooor',
+    params: {
+      connectedAddress,
+      scWalletAddress: '0x8464135c8F25Da09e49BC8782676a84730C318bC',
+      address: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
+      abi: buyNowPayLaterAbi as unknown as ComposooorMethodParams['abi'],
+      functionName: 'buyNowPayLater',
+      args: [],
+    },
+  }
+
   await window.ethereum?.request({
     method: 'wallet_invokeSnap',
     params: {
       snapId: defaultSnapOrigin,
-      request: {
-        method: 'composooor',
-        params: {
-          scWalletAddress: '0x8464135c8F25Da09e49BC8782676a84730C318bC',
-          address: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
-          abi: buyNowPayLaterAbi,
-          functionName: 'buyNowPayLater',
-          args: [],
-        },
-      },
+      request,
     },
   } as unknown as any);
 };

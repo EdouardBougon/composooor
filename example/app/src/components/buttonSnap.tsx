@@ -1,4 +1,6 @@
+import { PrefixedBy0x } from '@composooor/composooor';
 import { useContext } from "react";
+import { useAccount } from 'wagmi';
 import { MetamaskActions, MetaMaskContext } from '../snap/context';
 import {
   connectSnap,
@@ -8,6 +10,7 @@ import {
 
 const ButtonPaySnap = () => {
   const [state, dispatch] = useContext(MetaMaskContext);
+  const { address } = useAccount();
 
   const handleConnectClick = async () => {
     try {
@@ -25,8 +28,12 @@ const ButtonPaySnap = () => {
   };
 
   const handleSendHelloClick = async () => {
+    if (address === undefined) {
+      return;
+    }
+
     try {
-      await buyNowPayLater();
+      await buyNowPayLater(address);
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });
