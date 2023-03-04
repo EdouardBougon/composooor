@@ -31,9 +31,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const wallet = new Wallet(privKey as string, provider);
   const { address } = wallet;
   
-  const calls: Call[] = [
+  let calls: Call[] = [
     {
-      callee: address as PrefixedBy0x,
+      callee: config.address as PrefixedBy0x,
       functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
       data: `0x${iface
         .encodeFunctionData(config.functionName, config.args)
@@ -45,27 +45,24 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const scWalletContract = new Contract(
     config.scWalletAddress,
     scWalletAbi,
-    wallet,
-  );
+    provider,
+  ).connect(wallet);
 
   try {
-    console.log(await scWalletContract.estimateGas.execute(calls));
+    await scWalletContract.estimateGas.execute(calls);
   } catch (e) {
-    console.log(e);
     const error: Error | MissingOffchainDataError = decodeRevertMessage(
       e as Error,
-      );
-
-    /* if (error === undefined) {
+    );
+      
+    if (error instanceof Error) {
+      // setPrepareError(error);
       return;
     }
-    
-    const { data: responseData } = await axios.get(error.url, {
-      params: {
-        args: error.abiArgs,
-      },
-    });
-    
+
+    const responseData = await fetch(error.url + `?args=${error.abiArgs}`);
+    const data = (await (responseData.json() as any)).data;
+      
     const callToRegisterData: Call = {
       callee: error.registryAddress,
       functionSelector: utils
@@ -73,12 +70,17 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       .slice(0, 10) as PrefixedBy0x,
       data: defaultAbiCoder.encode(
         ['bytes'],
-        [responseData.data],
+        [data],
         ) as PrefixedBy0x,
       };
 
     calls = [callToRegisterData, ...calls];
-    } */
+
+    try {
+      const result = await scWalletContract.execute(calls);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   switch (request.method) {

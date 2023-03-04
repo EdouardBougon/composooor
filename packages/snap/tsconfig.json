@@ -1,14 +1,9 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
+    "typeRoots": ["../../../../node_modules/@types"],
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "useUnknownInCatchVariables": false,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ES2017"
+    "noEmit": true
   },
   "exclude": [
     "**/__snapshots__/**",
