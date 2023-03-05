@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --build --force",
     "start:dev": "ts-node-dev ./src/server.ts --build --force",
-    "start:prod": "node ./dist/server.js",
+    "start:prod": "ts-node ./src/server.ts --build --force",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
@@ -19,6 +19,8 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.17"
+    "@types/express": "^4.17.17",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   }
 }

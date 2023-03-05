@@ -12,15 +12,29 @@ services:
     healthCheckPath: /api/heartbeat
     autoDeploy: true
 
+  # - type: web
+  #   name: composooor-app
+  #   env: static
+  #   repo: https://github.com/kairos-loan/composooor.git
+  #   branch: main
+  #   buildCommand: yarn && yarn app build
+  #   buildFilter:
+  #     paths:
+  #       - src/**/*.js
+  #     ignoredPaths:
+  #       - src/**/*.test.js
+  #   staticPublishPath: ./dist
+  #   autoDeploy: true
+
   - type: web
     name: composooor-app
-    env: static
+    plan: free
+    env: node
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
-    # buildFilter:
-    #   paths:
-    #     - src/**/*.js
-    #   ignoredPaths:
-    #     - src/**/*.test.js
-    staticPublishPath: ./dist
+    region: frankfurt
+    buildCommand: yarn
+    startCommand: yarn app start:prod --port $PORT
+    numInstances: 1
+    healthCheckPath: /
     autoDeploy: true
