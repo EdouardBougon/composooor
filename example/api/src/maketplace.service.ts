@@ -47,8 +47,12 @@ export async function getMockSignedOffer(implem: string, tokenId: string): Promi
  * Should be the signature of the offer done by the NFT owner
  */
 export async function getMockSignature(offer: SaleOfferStruct): Promise<string> {
+  const privateKey: string =
+    process.env.PRIVATE_KEY ?? 'ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+
+  console.log(privateKey);
   // sign from 0xf39
-  const wallet: Wallet = new Wallet('ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80');
+  const wallet: Wallet = new Wallet(privateKey);
   const payload: string = ethers.utils.defaultAbiCoder.encode(
     ['address', 'uint256', 'uint256'],
     [offer.implem, offer.tokenId, offer.price],

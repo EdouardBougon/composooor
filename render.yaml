@@ -11,6 +11,9 @@ services:
     numInstances: 1
     healthCheckPath: /api/heartbeat
     autoDeploy: true
+    envVars:
+      - key: PRIVATE_KEY
+        sync: false
 
   # - type: web
   #   name: composooor-app
