@@ -2,7 +2,13 @@ import { FaEthereum } from "react-icons/fa";
 import ButtonPayComposooor from "./buttonComposooor";
 import nft from "../assets/nft.png";
 
-const CardComposooor = () => {
+
+export interface CardComposooorProps {
+  addLog: (log: string) => void;
+  resetLogs: () => void;
+}
+
+const CardComposooor = ({ addLog, resetLogs }: CardComposooorProps) => {
   return (
     <div className="z-10">
       <div className="w-72 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -41,7 +47,7 @@ const CardComposooor = () => {
             </div>
           </div>
           <div className="w-full text-center">
-            <ButtonPayComposooor />
+            <ButtonPayComposooor addLog={addLog} resetLogs={resetLogs} />
           </div>
         </div>
       </div>

@@ -2,7 +2,13 @@ import { FaEthereum } from "react-icons/fa";
 import nft from "../assets/nft.png";
 import ButtonPaySnap from "./buttonSnap";
 
-const CardSnap = () => {
+
+export interface CardSnapProps {
+  addLog: (log: string) => void;
+  resetLogs: () => void;
+}
+
+const CardSnap = ({ addLog, resetLogs }: CardSnapProps) => {
   return (
     <div className="z-10">
       <div className="w-72 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -41,7 +47,7 @@ const CardSnap = () => {
             </div>
           </div>
           <div className="w-full text-center">
-            <ButtonPaySnap />
+            <ButtonPaySnap addLog={addLog} resetLogs={resetLogs} />
           </div>
         </div>
       </div>

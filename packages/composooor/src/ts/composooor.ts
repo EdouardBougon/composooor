@@ -13,10 +13,17 @@ import { Contract, utils } from 'ethers';
 import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 import { useAsync } from './hooks/useAsync';
 
+
+const sleep = (timeoutInMs: number) => new Promise(
+  (resolve: (reseon?: any) => void) => setTimeout(() => resolve(), timeoutInMs)
+);
+
+
 /**
  * Call
  */
 interface Call {
+  verboseName: string;
   callee: PrefixedBy0x;
   functionSelector: PrefixedBy0x;
   data: PrefixedBy0x;
@@ -28,7 +35,7 @@ interface Call {
 export type UseComposooorConfig = Required<
   Pick<UsePrepareContractWriteConfig, 'abi' | 'address' | 'args' | 'functionName'>
 > &
-  UsePrepareContractWriteConfig & { scWalletAddr: PrefixedBy0x };
+  UsePrepareContractWriteConfig & { scWalletAddr: PrefixedBy0x, addLog: (log: string) => void, resetLogs: () => void };
 
 export type UseComposooorResult = ReturnType<typeof useContractWrite> & {
   isPrepareError: boolean;
@@ -40,35 +47,40 @@ export type UseComposooorResult = ReturnType<typeof useContractWrite> & {
  */
 export function useComposooor(config: UseComposooorConfig): UseComposooorResult {
   const iface = new utils.Interface(config.abi as utils.Fragment[]);
-  const [calls, setCalls] = useState<Call[]>([]);
   const [prepareError, setPrepareError] = useState<Error>();
   const provider = useProvider({ chainId: config.chainId });
   const { address } = useAccount();
-
-  useEffect(() => {
-    setCalls([
-      {
-        callee: config.address,
-        functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
-        data: `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
-      },
-    ]);
-  }, []);
+  const [calls, setCalls] = useState<Call[]>([{
+    verboseName: config.functionName,
+    callee: config.address,
+    functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
+    data: `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
+  }]);
+  const addLog = config.addLog;
 
   useAsync(async () => {
     const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider).connect(address as string);
 
     try {
+      await sleep(1000); // add latency
+      addLog(`Preparing transaction: ${calls.map((call: Call) => call.verboseName).join(', ')}`);
+      await sleep(1000); // add latency
+
       await scWalletContract.estimateGas.execute(calls);
+      addLog("Transaction prepared with success");
     } catch (e) {
+      addLog("Error while preparing transaction");
       const error: Error | MissingOffchainDataError = decodeRevertMessage(e as Error);
 
       if (error instanceof Error) {
+        addLog("Unknown error");
         setPrepareError(error);
 
         return;
       }
 
+      addLog("Missing offchain data error");
+      addLog(`Requesting data to ${error.url}`);
       const { data: responseData } = await axios.get<ComposooorQueryParams, AxiosResponse<ComposooorApiResponse>>(
         error.url,
         {
@@ -77,12 +89,16 @@ export function useComposooor(config: UseComposooorConfig): UseComposooorResult 
           },
         },
       );
+      await sleep(1500); // add latency
 
+      addLog(`Offchain data received`);
       const callToRegisterData: Call = {
+        verboseName: 'recordParameter',
         callee: error.registryAddress,
         functionSelector: utils.id('recordParameter(bytes)').slice(0, 10) as PrefixedBy0x,
         data: utils.defaultAbiCoder.encode(['bytes'], [responseData.data]) as PrefixedBy0x,
       };
+      addLog(`Updating transaction to register the new data`);
 
       setCalls(() => [callToRegisterData, ...calls]);
     }

@@ -1,19 +1,43 @@
 // import CardComposooor from "./components/cardComposooor";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CardComposooor from "./components/cardComposooor";
 import CardSnap from "./components/cardSnap";
-import Log from "./components/log";
+import { Log } from "./components/log";
 import Navbar from "./components/navbar";
 
 function App() {
   const [isSwitched, setIsSwitched] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
+
+  useEffect(
+    () => resetLogs(),
+    [isSwitched]
+  )
+
+  const addLog = useCallback(
+    (log: string) => setLogs((logs: string[]) => {
+      if (logs.includes(log)) {
+        return logs
+      }
+
+      return [...logs, log];
+
+    }), []
+  );
+
+  const resetLogs = useCallback(
+    () => setLogs([]), []
+  );
+
   return (
     <>
       <Navbar />
       <div className="z-10 inset-center flex gap-20">
-        {isSwitched ? <CardSnap /> : <CardComposooor />}
+        {isSwitched
+          ? <CardSnap addLog={addLog} resetLogs={resetLogs} />
+          : <CardComposooor addLog={addLog} resetLogs={resetLogs} />}
       </div>
-      <Log />
+      <Log logs={logs} />
       <div className="absolute bottom-0 right-0">
         <button
           className="bg-gray-800 text-white p-2 rounded-md"
