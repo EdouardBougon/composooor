@@ -97,7 +97,7 @@ export interface MarketPlace extends BaseContract {
       offer: SaleOfferStruct,
       signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<string>;
   };
 
   filters: {};
