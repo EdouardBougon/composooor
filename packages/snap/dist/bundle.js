@@ -32685,7 +32685,7 @@
           console.log(`Method ${request.method} not found`);
           return;
         }
-        const provider = new _ethers.providers.JsonRpcProvider();
+        const provider = new _ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
         const config = request.params;
         const iface = new _ethers.utils.Interface(config.abi);
         await ethereum.request({
