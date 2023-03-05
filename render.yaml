@@ -31,7 +31,7 @@ services:
 
   - type: web
     name: composooor-app
-    plan: starter
+    plan: standard
     env: node
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
