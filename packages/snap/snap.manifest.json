@@ -18,14 +18,12 @@
     }
   },
   "initialPermissions": {
-    "snap_dialog": {},
     "endowment:rpc": {
       "dapps": true,
       "snaps": true
     },
     "endowment:network-access": {},
-    "endowment:ethereum-provider": {},
-    "snap_getEntropy": {}
+    "endowment:ethereum-provider": {}
   },
   "manifestVersion": "0.1"
 }
