@@ -17,7 +17,6 @@ services:
     env: static
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
-    buildCommand: yarn && yarn app build
     # buildFilter:
     #   paths:
     #     - src/**/*.js

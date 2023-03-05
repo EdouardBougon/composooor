@@ -8,7 +8,6 @@
     "sourceMap": true,
     "strict": true,
     "declaration": true,
-    "outDir": "./out/ts",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
