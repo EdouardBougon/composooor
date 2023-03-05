@@ -6,7 +6,6 @@ services:
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
     region: frankfurt
-    rootDir: ./services/api
     buildCommand: yarn && yarn api build
     startCommand: yarn api start:prod
     numInstances: 1
