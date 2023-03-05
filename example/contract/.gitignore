@@ -1,3 +1,4 @@
 .env
-out
-
+out/cache_forge
+out/foundry
+out/foundry-broadcast

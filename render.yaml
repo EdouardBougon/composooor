@@ -6,7 +6,7 @@ services:
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
     region: frankfurt
-    buildCommand: yarn && yarn contract build && yarn contract generate && api build
+    buildCommand: yarn && api build
     startCommand: yarn api start:prod
     numInstances: 1
     healthCheckPath: /api/heartbeat
@@ -17,7 +17,7 @@ services:
     env: static
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
-    buildCommand: yarn && yarn contract build && yarn contract generate && yarn app build
+    buildCommand: yarn && yarn app build
     # buildFilter:
     #   paths:
     #     - src/**/*.js
