@@ -15,20 +15,6 @@ services:
       - key: PRIVATE_KEY
         sync: false
 
-  # - type: web
-  #   name: composooor-app
-  #   env: static
-  #   repo: https://github.com/kairos-loan/composooor.git
-  #   branch: main
-  #   buildCommand: yarn && yarn app build
-  #   buildFilter:
-  #     paths:
-  #       - src/**/*.js
-  #     ignoredPaths:
-  #       - src/**/*.test.js
-  #   staticPublishPath: ./dist
-  #   autoDeploy: true
-
   - type: web
     name: composooor-app
     plan: standard

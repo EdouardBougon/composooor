@@ -2,4 +2,7 @@
 out/cache_forge
 out/foundry
 out/foundry-broadcast
+out/anvil-logs.txt
+out/cache
+out/artifacts
 dist
