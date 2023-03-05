@@ -3,7 +3,7 @@ import { BuyNowPayLater__factory } from "@composooor/example-contract";
 import { useComposooor } from "@composooor/composooor";
 import { useWaitForTransaction } from "wagmi";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useWalletAddress } from '../snap/config/address';
+import { useWalletAddress } from '../config/address';
 
 
 export interface ButtonPayComposooorProps {

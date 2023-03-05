@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useAccount } from 'wagmi';
-import { useWalletAddress } from '../snap/config/address';
+import { useWalletAddress } from '../config/address';
 import { MetamaskActions, MetaMaskContext } from '../snap/context';
 import {
   connectSnap,

@@ -16,8 +16,8 @@ export const useWalletAddress = (): ContractAddress => {
             }
         case 84531:
             return {
-                scWalletAddress: '0x90FFfF20B1781743B759e72800534981A95e8ae1',
-                buyNowPayLaterAddress: '0x43b949724b56fd72F0Ad55d65685b7bD2F05800D',
+                scWalletAddress: '0x7D1347a242D4F3d6Cc304d664a84114D4dD8532F',
+                buyNowPayLaterAddress: '0x46454DaF165084b84dAC4b6842593D1C363DF2cC',
             }
         default: 
             throw new Error(`Unknown chainId ${provider.network.chainId}`);
