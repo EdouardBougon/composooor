@@ -10,16 +10,18 @@ import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 
 /**
  * Proxy used on each RPC request
-*/
-export async function onRpcRequest({ origin, request }: OnComposooorRpcRequestArgs): ReturnType<OnRpcRequestHandler> {
+ */
+export async function onRpcRequest({ request }: OnComposooorRpcRequestArgs): ReturnType<OnRpcRequestHandler> {
   if (request.method !== 'composooor') {
     console.log(`Method ${request.method} not found`);
+
     return;
   }
   const provider = new providers.JsonRpcProvider();
 
   const config: ComposooorMethodParams = request.params;
   const iface = new utils.Interface(config.abi);
+
   await ethereum.request({
     method: 'eth_requestAccounts',
   });
@@ -60,28 +62,32 @@ export async function onRpcRequest({ origin, request }: OnComposooorRpcRequestAr
     try {
       const encodedData = utils.hexConcat([
         scWalletContract.interface.getSighash('execute') as PrefixedBy0x,
-        defaultAbiCoder.encode(['tuple(address callee, bytes4 functionSelector, bytes data)[]'], [calls]) as PrefixedBy0x,
+        defaultAbiCoder.encode(
+          ['tuple(address callee, bytes4 functionSelector, bytes data)[]'],
+          [calls],
+        ) as PrefixedBy0x,
       ]);
 
       const params = [
         {
-          nonce: "0x0",
-          gasPrice: "0x001",
-          gas: "0x001",
+          nonce: '0x0',
+          gasPrice: '0x001',
+          gas: '0x001',
           to: config.scWalletAddress,
           from: config.connectedAddress,
-          value: "0x0",
+          value: '0x0',
           data: encodedData,
-          chainId: "0x7a69",
-        }
+          chainId: '0x7a69',
+        },
       ];
       const result = await ethereum.request({
         method: 'eth_sendTransaction',
-        params
-      })
-      console.log("result", result);
-    } catch(error) {
-      console.log("error", error);
+        params,
+      });
+
+      console.log('result', result);
+    } catch (requestError) {
+      console.log('error', requestError);
     }
   }
 }

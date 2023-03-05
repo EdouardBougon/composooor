@@ -36,8 +36,8 @@ services:
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
     region: frankfurt
-    buildCommand: yarn
+    buildCommand: yarn app build
     startCommand: yarn app start:prod --port $PORT
     numInstances: 1
-    healthCheckPath: /
+    healthCheckPath: /composooor.png
     autoDeploy: true
