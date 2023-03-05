@@ -6,7 +6,6 @@ import "./index.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskProvider } from './snap/context';
 
@@ -17,9 +16,9 @@ if (root === undefined) {
   throw new Error("Undefined html root element");
 }
 
-let network_config: Chain = {
+const anvil: Chain = {
   id: 31337,
-  name: "local",
+  name: "Anvil",
   network: "localhost",
   nativeCurrency: {
     decimals: 18,
@@ -33,8 +32,26 @@ let network_config: Chain = {
   testnet: false,
 };
 
+const base: Chain = {
+  id: 84531,
+  name: "Base Goerli",
+  network: "Base Goerli",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ethereum",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: { http: ["https://goerli.base.org"] },
+    public: { http: ["https://goerli.base.org"] },
+  },
+  testnet: false,
+};
+
 const { chains, provider } = configureChains(
-  [mainnet, network_config],
+  window.location.host.match('localhost') !== null
+    ? [anvil, base]
+    : [base],
   [publicProvider()]
 );
 

@@ -1,6 +1,6 @@
-import { PrefixedBy0x } from '@composooor/composooor';
 import { useContext, useState } from "react";
 import { useAccount } from 'wagmi';
+import { useWalletAddress } from '../snap/config/address';
 import { MetamaskActions, MetaMaskContext } from '../snap/context';
 import {
   connectSnap,
@@ -19,6 +19,7 @@ const ButtonPaySnap = ({ addLog, resetLogs }: ButtonPaySnapProps) => {
   const [isSuccess, setIsSucess] = useState(false);
   const [isError, setIsError] = useState(false);
   const { address } = useAccount();
+  const { buyNowPayLaterAddress, scWalletAddress } = useWalletAddress()
 
   const handleConnectClick = async () => {
     try {
@@ -43,7 +44,7 @@ const ButtonPaySnap = ({ addLog, resetLogs }: ButtonPaySnapProps) => {
     try {
       resetLogs();
       addLog('Sending transaction to Metamask Snap');
-      await buyNowPayLater(address);
+      await buyNowPayLater(address, buyNowPayLaterAddress, scWalletAddress);
       addLog('Transaction executed with success');
       setIsSucess(true);
     } catch (e) {

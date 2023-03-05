@@ -58,13 +58,13 @@ const buyNowPayLaterAbi = BuyNowPayLater__factory.abi;
 /**
  * Invoke the "hello" method from the example snap.
  */
-export const buyNowPayLater = async (connectedAddress: PrefixedBy0x) => {
+export const buyNowPayLater = async (connectedAddress: PrefixedBy0x, buyNowPayLaterAddress: PrefixedBy0x, scWalletAddress: PrefixedBy0x) => {
   const request: OnComposooorRequestArgs = {
     method: 'composooor',
     params: {
       connectedAddress,
-      scWalletAddress: '0x8464135c8F25Da09e49BC8782676a84730C318bC',
-      address: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
+      scWalletAddress: scWalletAddress,
+      address: buyNowPayLaterAddress,
       abi: buyNowPayLaterAbi as unknown as ComposooorMethodParams['abi'],
       functionName: 'buyNowPayLater',
       args: [],

@@ -3,6 +3,7 @@ import { BuyNowPayLater__factory } from "@composooor/example-contract";
 import { useComposooor } from "@composooor/composooor";
 import { useWaitForTransaction } from "wagmi";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useWalletAddress } from '../snap/config/address';
 
 
 export interface ButtonPayComposooorProps {
@@ -12,6 +13,8 @@ export interface ButtonPayComposooorProps {
 
 
 const ButtonPayComposooor = ({ addLog, resetLogs }: ButtonPayComposooorProps) => {
+  const { buyNowPayLaterAddress, scWalletAddress } = useWalletAddress()
+
   const [isDisabled, setDisabled] = useState(false);
   const {
     write,
@@ -19,8 +22,8 @@ const ButtonPayComposooor = ({ addLog, resetLogs }: ButtonPayComposooorProps) =>
     isError: isWritError,
     isPrepareError,
   } = useComposooor({
-    scWalletAddr: "0x8464135c8F25Da09e49BC8782676a84730C318bC",
-    address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+    scWalletAddr: scWalletAddress,
+    address: buyNowPayLaterAddress,
     abi: BuyNowPayLater__factory.abi,
     functionName: "buyNowPayLater",
     args: [],

@@ -56,7 +56,16 @@ export function useComposooor(config: UseComposooorConfig): UseComposooorResult 
     functionSelector: iface.getSighash(config.functionName) as PrefixedBy0x,
     data: `0x${iface.encodeFunctionData(config.functionName, config.args).slice(10)}`,
   }]);
+
   const addLog = config.addLog;
+  const resetLogs = config.resetLogs;
+
+  useEffect(
+    () => {
+      resetLogs();
+    },
+    [provider]
+  )
 
   useAsync(async () => {
     const scWalletContract = new Contract(config.scWalletAddr, scWalletAbi, provider).connect(address as string);
