@@ -7,7 +7,7 @@
     "url": "git+https://github.com/kairos-loan/composooor.git"
   },
   "source": {
-    "shasum": "Ogz0DCVyo6QuIwYUOwNbIUrSHpP2wI3oKK7F6vqIEko=",
+    "shasum": "ewYoi4UxYk2KAElbxI4FTtvLmAj1j628DMsdVCtKgSI=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

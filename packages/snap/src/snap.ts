@@ -5,6 +5,7 @@ import type { OnRpcRequestHandler } from '@metamask/snaps-types';
 
 import { utils, providers, Contract } from 'ethers';
 import { defaultAbiCoder } from 'ethers/lib/utils';
+import { SmartContractWallet__factory } from '@composooor/example-contract/dist/out/tc/factories/SmartContractWallet__factory';
 
 import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 
@@ -17,7 +18,9 @@ export async function onRpcRequest({ request }: OnComposooorRpcRequestArgs): Ret
 
     return;
   }
-  const provider = new providers.JsonRpcProvider('https://polygon-rpc.com');
+  const provider = new providers.JsonRpcProvider({
+    url: 'https://polygon-rpc.com',
+  });
 
   const config: ComposooorMethodParams = request.params;
   const iface = new utils.Interface(config.abi);
@@ -60,26 +63,16 @@ export async function onRpcRequest({ request }: OnComposooorRpcRequestArgs): Ret
     calls = [callToRegisterData, ...calls];
 
     try {
-      const encodedData = utils.hexConcat([
-        scWalletContract.interface.getSighash('execute') as PrefixedBy0x,
-        defaultAbiCoder.encode(
-          ['tuple(address callee, bytes4 functionSelector, bytes data)[]'],
-          [calls],
-        ) as PrefixedBy0x,
-      ]);
+      const funcSelectorAndData = SmartContractWallet__factory.createInterface().encodeFunctionData('execute', [calls]);
 
       const params = [
         {
-          nonce: '0x0',
-          gasPrice: '0x001',
-          gas: '0x001',
-          to: config.scWalletAddress,
           from: config.connectedAddress,
-          value: '0x0',
-          data: encodedData,
-          chainId: '0x7a69',
+          to: config.scWalletAddress,
+          data: funcSelectorAndData,
         },
       ];
+
       const result = await ethereum.request({
         method: 'eth_sendTransaction',
         params,

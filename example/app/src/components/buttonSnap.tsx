@@ -65,6 +65,12 @@ const ButtonPaySnap = ({ addLog, resetLogs }: ButtonPaySnapProps) => {
         > Connect Snap </button>
       )}
 
+      {/* <button
+        disabled={!state.isFlask}
+        onClick={handleConnectClick}
+        className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg"
+      > Reconnect Snap </button> */}
+
       {state.installedSnap && !isSuccess && !isError && (
         <button
           disabled={!state.isFlask}
