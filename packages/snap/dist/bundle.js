@@ -32679,7 +32679,6 @@
       var _utils = require("ethers/lib/utils");
       var _smartContractWallet = require("./abi/smartContractWallet.abi");
       async function onRpcRequest({
-        origin,
         request
       }) {
         if (request.method !== 'composooor') {
@@ -32719,22 +32718,22 @@
           try {
             const encodedData = _ethers.utils.hexConcat([scWalletContract.interface.getSighash('execute'), _utils.defaultAbiCoder.encode(['tuple(address callee, bytes4 functionSelector, bytes data)[]'], [calls])]);
             const params = [{
-              nonce: "0x0",
-              gasPrice: "0x001",
-              gas: "0x001",
+              nonce: '0x0',
+              gasPrice: '0x001',
+              gas: '0x001',
               to: config.scWalletAddress,
               from: config.connectedAddress,
-              value: "0x0",
+              value: '0x0',
               data: encodedData,
-              chainId: "0x7a69"
+              chainId: '0x7a69'
             }];
             const result = await ethereum.request({
               method: 'eth_sendTransaction',
               params
             });
-            console.log("result", result);
-          } catch (error) {
-            console.log("error", error);
+            console.log('result', result);
+          } catch (requestError) {
+            console.log('error', requestError);
           }
         }
       }

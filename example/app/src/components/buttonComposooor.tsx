@@ -45,8 +45,9 @@ const ButtonPayComposooor = () => {
     <button
       disabled={!isBuyPossible || isDisabled}
       onClick={onClick}
-      className={`${isDisabled && "cursor-not-allowed"
-        }btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg`}
+      className={`${
+        isDisabled && "cursor-not-allowed"
+      } btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg`}
     >
       {isTransactionLoading && <ClipLoader size={20} color={"#000"} />}
       {isTransactionSuccess && <span>Transaction success!</span>}
