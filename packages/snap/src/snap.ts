@@ -3,21 +3,26 @@ import type { PrefixedBy0x } from './types/common';
 import type { Call, OnComposooorRpcRequestArgs, ComposooorMethodParams } from './types/snap';
 import type { OnRpcRequestHandler } from '@metamask/snaps-types';
 
-import { heading, panel, text } from '@metamask/snaps-ui';
 import { utils, providers, Contract } from 'ethers';
 import { defaultAbiCoder } from 'ethers/lib/utils';
-// import * as axios from 'axios';
 
 import { abi as scWalletAbi } from './abi/smartContractWallet.abi';
 
 /**
  * Proxy used on each RPC request
- */
+*/
 export async function onRpcRequest({ origin, request }: OnComposooorRpcRequestArgs): ReturnType<OnRpcRequestHandler> {
+  if (request.method !== 'composooor') {
+    console.log(`Method ${request.method} not found`);
+    return;
+  }
   const provider = new providers.JsonRpcProvider();
 
   const config: ComposooorMethodParams = request.params;
   const iface = new utils.Interface(config.abi);
+  await ethereum.request({
+    method: 'eth_requestAccounts',
+  });
 
   let calls: Call[] = [
     {
@@ -34,8 +39,7 @@ export async function onRpcRequest({ origin, request }: OnComposooorRpcRequestAr
     await scWalletContract.estimateGas.execute(calls);
     console.log('estimateGas e');
   } catch (e) {
-    console.log('estimateGas error');
-    console.log(e);
+    console.log('estimateGas expected error:', e);
     const error: Error | MissingOffchainDataError = decodeRevertMessage(e as Error);
 
     if (error instanceof Error) {
@@ -54,27 +58,31 @@ export async function onRpcRequest({ origin, request }: OnComposooorRpcRequestAr
     calls = [callToRegisterData, ...calls];
 
     try {
-      await scWalletContract.execute(calls);
-    } catch (executeErrro) {
-      console.log(executeErrro);
-    }
-  }
+      const encodedData = utils.hexConcat([
+        scWalletContract.interface.getSighash('execute') as PrefixedBy0x,
+        defaultAbiCoder.encode(['tuple(address callee, bytes4 functionSelector, bytes data)[]'], [calls]) as PrefixedBy0x,
+      ]);
 
-  switch (request.method) {
-    case 'composooor':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'Confirmation',
-          content: panel([
-            heading(`Sign Request`),
-            text(`Request: ${request.params.functionName}`),
-            text(`Args: ${JSON.stringify(request.params.args)}`),
-          ]),
-        },
-      });
-    default:
-      throw new Error('Method not found.');
+      const params = [
+        {
+          nonce: "0x0",
+          gasPrice: "0x001",
+          gas: "0x001",
+          to: config.scWalletAddress,
+          from: config.connectedAddress,
+          value: "0x0",
+          data: encodedData,
+          chainId: "0x7a69",
+        }
+      ];
+      const result = await ethereum.request({
+        method: 'eth_sendTransaction',
+        params
+      })
+      console.log("result", result);
+    } catch(error) {
+      console.log("error", error);
+    }
   }
 }
 
