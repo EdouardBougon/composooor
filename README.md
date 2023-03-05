@@ -91,3 +91,9 @@ contract Example is ComposooorRegister {
 - [Polygon Mainnet](https://polygonscan.com/address/0x7165305088dfc6961937fc9bf16600373a01c5ea#code)
 - [Mantle Testnet](https://explorer.testnet.mantle.xyz/address/0x7165305088dfC6961937fc9BF16600373A01C5eA/contracts#address-tabs)
 - [Scroll Testnet](https://blockscout.scroll.io/address/0x7165305088dfC6961937fc9BF16600373A01C5eA/contracts#address-tabs)
+
+# Team members
+
+- Nicolas: Fullstack developer and Solidity expert, Nicolas was previously part of the smart contract team at Morpho Labs before co-founding Kairos Loan 7 months ago.
+- Edouard: With more than 15 years of experience, Edouard has worked in many large groups such as Kering before joining the blockchain ecosystem. He is now Lead Full Stack Engineer at Kairos Loan.
+- Joseph: With a background in Computer Sciences and after a stint in private and investment banking, Joseph was an advisor to the French central bank on DeFi/RWA issues before co-founding Kairos Loan. 
