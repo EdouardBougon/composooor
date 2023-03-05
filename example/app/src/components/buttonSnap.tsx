@@ -76,7 +76,7 @@ const ButtonPaySnap = ({ addLog, resetLogs }: ButtonPaySnapProps) => {
           disabled={!state.isFlask}
           onClick={handleSendHelloClick}
           className="btn-2 btn text-lg px-3 py-2 mt-3 text-sm font-medium text-center rounded-lg"
-        > Buy </button>
+        > Buy now </button>
       )}
 
       {isSuccess && !isError && (

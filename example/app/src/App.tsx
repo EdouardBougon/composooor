@@ -43,7 +43,7 @@ function App() {
           className="bg-gray-800 text-white p-2 rounded-md"
           onClick={() => setIsSwitched(!isSwitched)}
         >
-          Switch
+          Switch to {isSwitched ? "Composooor SDK" : "Metamask Snap"}
         </button>
       </div>
       <div className="gradient"></div>
