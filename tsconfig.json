@@ -29,12 +29,11 @@
       "path": "./example/contract"
     },
     {
-      "path": "./example/composooor"
+      "path": "./packages/composooor"
     }
   ],
   "include": [],
   "exclude": [
-    "**/out",
     "**/node_modules"
   ]
 }

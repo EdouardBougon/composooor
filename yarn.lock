@@ -1422,6 +1422,7 @@ __metadata:
   dependencies:
     "@composooor/composooor": "workspace:*"
     "@composooor/example-contract": "workspace:^"
+    "@composooor/snap": "workspace:*"
     "@metamask/providers": ^9.0.0
     "@rainbow-me/rainbowkit": ^0.11.0
     "@types/react": ^18.0.27
@@ -1460,7 +1461,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@composooor/snap@workspace:packages/snap":
+"@composooor/snap@workspace:*, @composooor/snap@workspace:packages/snap":
   version: 0.0.0-use.local
   resolution: "@composooor/snap@workspace:packages/snap"
   dependencies:

@@ -10,7 +10,7 @@ import { ethers } from 'ethers';
 import { getBuyArgs, getMockSignedOffer } from './maketplace.service';
 
 const app: express.Express = express();
-const port: number = 8080;
+const port: number = +(process.env.PORT ?? '8080');
 
 app.use(cors());
 app.use(express.json());
@@ -32,6 +32,11 @@ app.get(
     res.writeHead(200, {}).end(JSON.stringify({ data: buyArgsAbiEncoded } as ComposooorApiResponse));
   },
 );
+
+// Heartbeat
+app.get('/api/heartbeat', (_: Request, res: Response) => {
+  res.writeHead(200, {}).end(JSON.stringify({ message: 'ok' }));
+});
 
 // Start server
 app.listen(port, () => {

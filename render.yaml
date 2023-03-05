@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: composooor-api
+    plan: free
+    env: node
+    repo: https://github.com/kairos-loan/composooor.git
+    branch: main
+    region: oregon
+    rootDir: ./services/api
+    buildCommand: yarn && yarn api build
+    startCommand: yarn api start:prod
+    numInstances: 1
+    healthCheckPath: /api/heartbeat
+    autoDeploy: true
+
+  - type: web
+    name: composooor-app
+    env: static
+    repo: https://github.com/kairos-loan/composooor.git
+    branch: main
+    buildCommand: yarn && yarn contract build && yarn contract generate && yarn app build
+    # buildFilter:
+    #   paths:
+    #     - src/**/*.js
+    #   ignoredPaths:
+    #     - src/**/*.test.js
+    staticPublishPath: ./dist
+    autoDeploy: true

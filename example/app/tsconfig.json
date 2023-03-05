@@ -32,6 +32,9 @@
       "path": "./tsconfig.node.json"
     },
     {
+      "path": "../contract"
+    },
+    {
       "path": "../../packages/composooor"
     }
   ]
