@@ -22,8 +22,8 @@ export const useWalletAddress = (): ContractAddress => {
             }
         case polygon.id:
             return {
-                scWalletAddress: '0x22833FAf039521F98FE907C77A7510C1CCb61fF4',
-                buyNowPayLaterAddress: '0x2722f31dA6862D416eE5d1721BB64C46240431a4',
+                scWalletAddress: '0xD4183C5f4FC258ebA51E0F30077752E165bE230e',
+                buyNowPayLaterAddress: '0x105Bd1c20918d485AeAF016a2813E303FA5e8C0A',
             }
         default: 
             throw new Error(`Unknown chainId ${provider.network.chainId}`);
