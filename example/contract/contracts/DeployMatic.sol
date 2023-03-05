@@ -15,6 +15,12 @@ contract Deploy is Script {
     function run() public {
         vm.startBroadcast();
 
-        new BuyNowPayLater(FakeKairos(address(0)), FlashLender(address(0)), MarketPlace(address(0)), MockNFT(address(0)), MockWeth(address(0)));
+        new BuyNowPayLater(
+            FakeKairos(address(0)),
+            FlashLender(address(0)),
+            MarketPlace(address(0)),
+            MockNFT(address(0)),
+            MockWeth(address(0))
+        );
     }
 }
