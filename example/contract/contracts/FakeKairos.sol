@@ -12,8 +12,11 @@ contract FakeKairos {
         wEth = _wEth;
     }
 
-    function borrow(IERC721 implem, uint tokenId, uint amount) external {
+    function borrow(IERC721 implem, uint tokenId, uint amount, address seller) external {
         implem.transferFrom(msg.sender, address(this), tokenId);
         wEth.transfer(msg.sender, amount);
+
+        // we return the nft to the initial marketplace seller so everyone can try the live demo
+        implem.transferFrom(address(this), seller, tokenId);
     }
 }

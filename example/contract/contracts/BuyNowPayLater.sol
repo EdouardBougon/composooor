@@ -34,9 +34,9 @@ contract BuyNowPayLater is IFlashBorrower, MarketPlaceComposooored {
     function flashCallback(bytes memory callbackData) external {
         (address initialMsgSender, IERC721 implem, uint tokenId) = abi.decode(callbackData, (address, IERC721, uint));
         wEth.approve(address(market), 1 ether);
-        marketPlaceBuy(implem, tokenId);
+        address seller = marketPlaceBuy(implem, tokenId);
         nft.approve(address(kairos), 1);
-        kairos.borrow(implem, tokenId, 7 ether / 10);
+        kairos.borrow(implem, tokenId, 7 ether / 10, seller);
         wEth.transferFrom(initialMsgSender, address(this), 3 ether / 10);
         wEth.approve(address(flashLender), 1 ether);
     }
