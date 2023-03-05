@@ -1,6 +1,6 @@
 # Composooor
 
-Composooor is a library enabling composability between previously imcompatible Dapps.
+Composooor is a library to make smart contracts using off-chain data seamlessly composable.
 
 ## Problem
 
@@ -29,13 +29,13 @@ and computation offchain in a composable way ? This would enable composably :
 Meet Composooor.
 Composoor is a front-end and smart-contract library made to build hybrid on & off chain composable apps.
 Building a smart contract that must interact with an hybrid app (e.g OpenSea)? A one-line import of the
-corresponding composooor adapter does the trick ([example](../../example/contract/contracts/MarketPlaceComposooored.sol)). Want to leverage offchain power inside your smart contract
-without breaking composability? One line import of [Composooor register](./src/sol/ComposooorRegister.sol).
-Need a front-end for all that? One line import of [useComposooor](./src/ts/composooor.ts).
+corresponding composooor adapter does the trick ([example](./example/contract/contracts/MarketPlaceComposooored.sol)). Want to leverage offchain power inside your smart contract
+without breaking composability? One line import of [Composooor register](./packages/composooor/src/sol/ComposooorRegister.sol).
+Need a front-end for all that? One line import of [useComposooor](./packages/composooor/src/ts/composooor.ts).
 
 ## How it works
 
-![schema](composooor-schema.png)
+![schema](./packages/composooor/composooor-schema.png)
 Composooor design is based on a standardized way for smart contracts to signal missing data that should
 come from an off chain ressource at transaction-preparation time.
 
@@ -91,3 +91,4 @@ contract Example is ComposooorRegister {
 - [Polygon Mainnet](https://polygonscan.com/address/0x7165305088dfc6961937fc9bf16600373a01c5ea#code)
 - [Mantle Testnet](https://explorer.testnet.mantle.xyz/address/0x7165305088dfC6961937fc9BF16600373A01C5eA/contracts#address-tabs)
 - [Scroll Testnet](https://blockscout.scroll.io/address/0x7165305088dfC6961937fc9BF16600373A01C5eA/contracts#address-tabs)
+- [Aurora Testnet](https://explorer.testnet.aurora.dev/address/0x7165305088dfC6961937fc9BF16600373A01C5eA/contracts#address-tabs)
