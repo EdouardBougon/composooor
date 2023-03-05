@@ -21,7 +21,7 @@
     "snap_dialog": {},
     "endowment:rpc": {
       "dapps": true,
-      "snaps": false
+      "snaps": true
     },
     "endowment:network-access": {},
     "endowment:ethereum-provider": {},
