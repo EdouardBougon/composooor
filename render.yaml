@@ -1,7 +1,7 @@
 services:
   - type: web
     name: composooor-api
-    plan: free
+    plan: starter
     env: node
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
@@ -31,7 +31,7 @@ services:
 
   - type: web
     name: composooor-app
-    plan: free
+    plan: starter
     env: node
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
