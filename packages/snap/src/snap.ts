@@ -17,7 +17,7 @@ export async function onRpcRequest({ request }: OnComposooorRpcRequestArgs): Ret
 
     return;
   }
-  const provider = new providers.JsonRpcProvider();
+  const provider = new providers.JsonRpcProvider('https://polygon-rpc.com');
 
   const config: ComposooorMethodParams = request.params;
   const iface = new utils.Interface(config.abi);
