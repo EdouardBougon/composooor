@@ -6,7 +6,7 @@ services:
     repo: https://github.com/kairos-loan/composooor.git
     branch: main
     region: frankfurt
-    buildCommand: yarn && yarn api build
+    buildCommand: yarn && yarn contract build && yarn contract generate && api build
     startCommand: yarn api start:prod
     numInstances: 1
     healthCheckPath: /api/heartbeat
