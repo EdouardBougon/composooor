@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-import "forge-std/Test.sol";
-
 error MissingOffchainDataError(
     address registryAddress,
     string url,
@@ -30,10 +28,11 @@ contract ComposooorRegister {
     function consumeParameter(
         string memory url,
         bytes memory abiArgs
-    ) internal returns (bytes memory) {
+    ) internal returns (bytes memory data_) {
         if (data.length == 0) {
             revert MissingOffchainDataError(address(this), url, abiArgs);
         }
-        return data;
+        data_ = data;
+        delete data;
     }
 }
